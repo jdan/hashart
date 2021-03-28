@@ -12,6 +12,10 @@ class Art {
     return Object.entries(this.template).concat([["unused", 32 - usedBytes]]);
   }
 
+  renderSeed($el, seed) {
+    $el.innerText = seed;
+  }
+
   renderExplanation($el, buff) {
     let buffer = new Uint8Array(buff);
     let idx = 0;
@@ -21,11 +25,17 @@ class Art {
     for (let [name, bytes] of this.templateEntries()) {
       let $segment = document.createElement("div");
       $segment.className = "segment";
+      let slice = buffer.slice(idx, idx + bytes);
+
+      $segment.setAttribute("title", this.normalize(slice));
+
       let sectionBytes = Array.prototype.map
-        .call(buffer.slice(idx, idx + bytes), (x) =>
-          ("00" + x.toString(16)).slice(-2)
-        )
+        .call(slice, (x) => ("00" + x.toString(16)).slice(-2))
         .join("");
+
+      if (name === "unused") {
+        $segment.classList.add("unused");
+      }
 
       let $bytes = document.createElement("div");
       $bytes.className = "segment-bytes";
@@ -35,8 +45,8 @@ class Art {
       $name.className = "segment-name";
       $name.innerText = name;
 
-      $segment.appendChild($bytes);
       $segment.appendChild($name);
+      $segment.appendChild($bytes);
       $container.appendChild($segment);
       idx += bytes;
     }
@@ -45,19 +55,37 @@ class Art {
     $el.appendChild($container);
   }
 
-  render(buff) {
-    let buffer = new Uint8Array(buff);
-    let idx = 0;
-    let obj = {};
+  str2ab(text) {
+    return new TextEncoder().encode(text);
+  }
 
-    for (let [name, bytes] of Object.entries(this.template)) {
-      obj[name] = buffer.slice(idx, idx + bytes);
-      // TODO: obj[name + 'Normalized'] = ...
-
-      idx += bytes;
+  normalize(buffer) {
+    if (buffer.byteLength === 0) {
+      return 0;
+    } else {
+      return buffer[0] / 0x100 + this.normalize(buffer.slice(1)) / 0x100;
     }
+  }
 
-    this.draw(obj);
+  render(text) {
+    return crypto.subtle.digest("SHA-256", this.str2ab(text)).then((buff) => {
+      c.renderSeed(document.getElementById("seed-value"), text);
+      c.renderExplanation(document.getElementById("hash"), buff);
+
+      let buffer = new Uint8Array(buff);
+      let idx = 0;
+      let obj = {};
+
+      for (let [name, bytes] of Object.entries(this.template)) {
+        const slice = buffer.slice(idx, idx + bytes);
+        obj[name + "Buffer"] = slice;
+        obj[name] = this.normalize(slice);
+
+        idx += bytes;
+      }
+
+      this.draw(obj);
+    });
   }
 
   draw() {
@@ -65,21 +93,41 @@ class Art {
   }
 }
 
-function str2ab(text) {
-  return new TextEncoder().encode(text);
-}
-
 class Circle extends Art {
   constructor(ctx) {
     super(ctx, {
-      pos: 2,
-      radius: 5,
+      x1: 2,
+      y1: 2,
+      r1: 4,
+
+      x2: 2,
+      y2: 2,
+      r2: 4,
     });
   }
 
-  draw({ pos, radius }) {
-    console.log("pos", pos);
-    console.log("radius", radius);
+  draw({ x1, y1, r1, x2, y2, r2 }) {
+    this.ctx.beginPath();
+    this.ctx.fillStyle = "rgba(0, 0, 0, 0.2)";
+    this.ctx.arc(
+      x1 * ctx.canvas.width,
+      y1 * ctx.canvas.height,
+      r1 * ctx.canvas.width,
+      0,
+      2 * Math.PI
+    );
+    this.ctx.fill();
+
+    this.ctx.beginPath();
+    this.ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
+    this.ctx.arc(
+      x2 * ctx.canvas.width,
+      y2 * ctx.canvas.height,
+      r2 * ctx.canvas.width,
+      0,
+      2 * Math.PI
+    );
+    this.ctx.fill();
   }
 }
 
@@ -87,7 +135,4 @@ const $canvas = document.getElementById("canvas");
 const ctx = $canvas.getContext("2d");
 const c = new Circle(ctx);
 
-crypto.subtle.digest("SHA-256", str2ab("Hello, world!")).then((buffer) => {
-  c.renderExplanation(document.getElementById("hash"), buffer);
-  c.render(buffer);
-});
+c.render("two circles one canvas");
