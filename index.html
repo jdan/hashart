@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+  <title>hashart</title>
+  <style>
+    body {
+      margin: 100px auto;
+      width: 800px;
+    }
+
+    canvas {
+      width: 800px;
+      height: 800px;
+      margin: 0 auto;
+      border: 2px solid black;
+    }
+
+    .explanation {
+      display: flex;
+      font-family: monospace;
+      margin-bottom: 20px;
+    }
+
+    .segment {
+      position: relative;
+    }
+
+    .segment-bytes {
+      font-weight: bold;
+      border-top: 1px solid #666;
+      font-size: 18px;
+    }
+
+    .segment + .segment {
+      margin-left: 15px;
+    }
+
+    .segment-name {
+      position: absolute;
+      top: -16px;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="hash"></div>
+
+  <canvas width="1600" height="1600" id="canvas"></canvas>
+
+  <script src="./main.js?t=1"></script>
+</body>
+</html>
