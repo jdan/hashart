@@ -32,10 +32,6 @@ class Art {
     return segments;
   }
 
-  str2ab(text) {
-    return new TextEncoder().encode(text);
-  }
-
   normalize(buffer) {
     if (buffer.byteLength === 0) {
       return 0;
@@ -61,7 +57,7 @@ class Art {
   }
 
   draw() {
-    throw "draw() not implemented";
+    throw "Child class must implement draw()";
   }
 }
 
@@ -91,7 +87,7 @@ export class Circle extends Art {
     ctx.stroke();
 
     // only shade for small enough distances
-    if (d < 20) {
+    if (d > 0 && d < 20) {
       for (let myd = r - d; myd > -r; myd -= d) {
         let mytheta = Math.acos(myd / r);
         ctx.beginPath();
@@ -131,14 +127,3 @@ export class Circle extends Art {
     });
   }
 }
-
-// const $canvas = document.getElementById("canvas");
-// const ctx = $canvas.getContext("2d");
-// const c = new Circle(ctx);
-
-// c.render("two circles one canvas");
-
-// document.getElementById("edit-link").addEventListener("click", (e) => {
-//   e.preventDefault();
-//   c.render(prompt("Enter a seed"));
-// });

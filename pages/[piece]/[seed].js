@@ -5,14 +5,6 @@ import classnames from "classnames";
 import { Circle } from "../../art.js";
 import styles from "./art.module.css";
 
-function normalize(buffer) {
-  if (buffer.byteLength === 0) {
-    return 0;
-  } else {
-    return buffer[0] / 0x100 + normalize(buffer.slice(1)) / 0x100;
-  }
-}
-
 function Hash({ parts }) {
   return (
     <div className={styles.explanation}>
@@ -80,7 +72,7 @@ function Art() {
         className={styles.canvas}
         width="1600"
         height="1600"
-      ></canvas>
+      />
     </main>
   );
 }
