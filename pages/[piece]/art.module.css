@@ -1,0 +1,40 @@
+.canvas {
+  width: 800px;
+  height: 800px;
+  margin: 0 auto;
+  border: 2px solid black;
+}
+
+.explanation {
+  display: flex;
+  font-family: monospace;
+  margin-bottom: 16px;
+}
+
+.bytes {
+  font-weight: bold;
+  border-top: 1px solid #666;
+  font-size: 18px;
+}
+
+.value-edit-row {
+  display: flex;
+  align-items: baseline;
+}
+
+.edit-link {
+  text-decoration: none;
+  padding-left: 8px;
+}
+
+.unused {
+  color: #aaa;
+}
+
+.unused-segment-bytes {
+  border-top-color: #aaa;
+}
+
+.segment {
+  margin-left: 8px;
+}
