@@ -1,3 +1,5 @@
+import Head from "next/head";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState, useEffect, useRef } from "react";
 import classnames from "classnames";
@@ -53,6 +55,12 @@ function Art() {
 
   return (
     <main>
+      <Head>
+        <title>{piece}</title>
+      </Head>
+
+      <h1>{piece}</h1>
+
       <div className={styles.explanation}>
         <div className={styles.segment}>
           <div>seed</div>
@@ -71,9 +79,15 @@ function Art() {
       <canvas
         ref={canvasEl}
         className={styles.canvas}
-        width="1600"
-        height="1600"
+        width="1320"
+        height="1320"
       />
+
+      <p>
+        <Link href="/">
+          <a>home</a>
+        </Link>
+      </p>
     </main>
   );
 }

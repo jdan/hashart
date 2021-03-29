@@ -1,21 +1,19 @@
 .canvas {
-  width: 800px;
-  height: 800px;
+  width: 660px;
+  height: 660px;
   margin: 0 auto;
   border: 2px solid black;
 }
 
 .explanation {
   display: flex;
-  font-family: monospace;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
 .bytes {
-  font-family: monospace;
   font-weight: bold;
   border-top: 1px solid #666;
-  font-size: 18px;
+  font-size: 15px;
 }
 
 .unused {

@@ -1,4 +1,9 @@
 body {
-  margin: 100px auto;
-  width: 800px;
+  margin: 40px auto;
+  width: 660px;
+}
+
+body,
+input {
+  font-family: monospace;
 }
