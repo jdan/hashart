@@ -6,7 +6,7 @@ export default function App({ Component, pageProps }) {
     <div>
       <Head>
         <meta charSet="UTF-8" />
-        <title>hashart</title>
+        <title>hash</title>
       </Head>
       <Component {...pageProps} />
     </div>

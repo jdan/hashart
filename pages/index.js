@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function Index() {
   return (
     <main>
-      <h1>hashart</h1>
+      <h1>hash</h1>
       <p>
         Art generated from{" "}
         <Link href="https://en.wikipedia.org/wiki/SHA-2">
