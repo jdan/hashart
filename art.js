@@ -25,6 +25,8 @@ class Art {
           .join(""),
         normalized: this.normalize(slice),
       });
+
+      idx += bytes;
     }
 
     return segments;

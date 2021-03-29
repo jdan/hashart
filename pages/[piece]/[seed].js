@@ -2,8 +2,8 @@ import { useRouter } from "next/router";
 import { useState, useEffect, useRef } from "react";
 import classnames from "classnames";
 
-import styles from "./art.module.css";
 import { Circle } from "../../art.js";
+import styles from "./art.module.css";
 
 function normalize(buffer) {
   if (buffer.byteLength === 0) {
