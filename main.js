@@ -108,6 +108,9 @@ class Circle extends Art {
   }
 
   draw({ x1, y1, r1, x2, y2, r2 }) {
+    this.ctx.fillStyle = "rgba(255, 255, 255, 1)";
+    this.ctx.fillRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
+
     this.ctx.beginPath();
     this.ctx.fillStyle = "rgba(0, 0, 0, 0.2)";
     this.ctx.arc(
