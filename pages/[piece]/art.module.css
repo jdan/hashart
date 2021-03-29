@@ -18,22 +18,8 @@
   font-size: 18px;
 }
 
-.value-edit-row {
-  display: flex;
-  align-items: baseline;
-}
-
-.edit-link {
-  text-decoration: none;
-  padding-left: 8px;
-}
-
 .unused {
   color: #aaa;
-}
-
-.unused-segment-bytes {
-  border-top-color: #aaa;
 }
 
 .segment {
