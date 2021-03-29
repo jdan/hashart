@@ -32,6 +32,7 @@ function Art() {
 
   const [hash, setHash] = useState(null);
   useEffect(async () => {
+    if (!seed) return;
     const stringBuffer = new TextEncoder().encode(seed);
     const buffer = await crypto.subtle.digest("SHA-256", stringBuffer);
     setHash(new Uint8Array(buffer));
