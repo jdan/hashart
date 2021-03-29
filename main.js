@@ -84,6 +84,7 @@ class Art {
         idx += bytes;
       }
 
+      ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
       this.draw(obj);
     });
   }
@@ -136,3 +137,8 @@ const ctx = $canvas.getContext("2d");
 const c = new Circle(ctx);
 
 c.render("two circles one canvas");
+
+document.getElementById("edit-link").addEventListener("click", (e) => {
+  e.preventDefault();
+  c.render(prompt("Enter a seed"));
+});

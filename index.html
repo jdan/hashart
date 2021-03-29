@@ -27,6 +27,16 @@
       font-size: 18px;
     }
 
+    .value-edit-row {
+      display: flex;
+      align-items: baseline;
+    }
+
+    #edit-link {
+      text-decoration: none;
+      padding-left: 8px;
+    }
+
     .unused {
       color: #aaa;
     }
@@ -45,7 +55,11 @@
   <div class="explanation">
     <div class="segment">
       <div class="seed-label">seed</div>
-      <div id="seed-value"></div>
+      <div class="value-edit-row">
+        <div id="seed-value"></div>
+        <a id="edit-link" href="#">edit</a>
+      </div>
+
     </div>
   </div>
   <div id="hash"></div>
