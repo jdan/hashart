@@ -99,39 +99,63 @@ class Circle extends Art {
     super(ctx, {
       x1: 2,
       y1: 2,
-      r1: 4,
+      r1: 2,
+      // prettier-ignore
+      "θ1": 1,
+      d1: 1,
 
       x2: 2,
       y2: 2,
-      r2: 4,
+      r2: 2,
+      // prettier-ignore
+      "θ2": 1,
+      d2: 1,
     });
   }
 
-  draw({ x1, y1, r1, x2, y2, r2 }) {
+  shadedCircle({ style, x, y, r, theta, d }) {
+    this.ctx.strokeStyle = style;
+    this.ctx.beginPath();
+    this.ctx.arc(x, y, r, 0, 2 * Math.PI);
+    this.ctx.stroke();
+
+    // shading
+    for (let myd = r - d; myd > -r; myd -= d) {
+      let mytheta = Math.acos(myd / r);
+      this.ctx.beginPath();
+      this.ctx.moveTo(
+        x + r * Math.cos(mytheta + theta),
+        y + r * Math.sin(mytheta + theta)
+      );
+      this.ctx.lineTo(
+        x + r * Math.cos(-mytheta + theta),
+        y + r * Math.sin(-mytheta + theta)
+      );
+      this.ctx.stroke();
+    }
+  }
+
+  draw({ x1, y1, r1, d1, x2, y2, r2, d2, ...obj }) {
     this.ctx.fillStyle = "rgba(255, 255, 255, 1)";
     this.ctx.fillRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
 
-    this.ctx.beginPath();
-    this.ctx.fillStyle = "rgba(0, 0, 0, 0.2)";
-    this.ctx.arc(
-      x1 * ctx.canvas.width,
-      y1 * ctx.canvas.height,
-      r1 * ctx.canvas.width,
-      0,
-      2 * Math.PI
-    );
-    this.ctx.fill();
+    this.shadedCircle({
+      style: "rgb(100, 100, 100)",
+      x: x1 * ctx.canvas.width,
+      y: y1 * ctx.canvas.height,
+      r: r1 * ctx.canvas.width,
+      theta: obj["θ1"] * Math.PI,
+      d: d1 * 20 + 10,
+    });
 
-    this.ctx.beginPath();
-    this.ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
-    this.ctx.arc(
-      x2 * ctx.canvas.width,
-      y2 * ctx.canvas.height,
-      r2 * ctx.canvas.width,
-      0,
-      2 * Math.PI
-    );
-    this.ctx.fill();
+    this.shadedCircle({
+      style: "rgb(51, 51, 51)",
+      x: x2 * ctx.canvas.width,
+      y: y2 * ctx.canvas.height,
+      r: r2 * ctx.canvas.width,
+      theta: obj["θ2"] * Math.PI,
+      d: d2 * 20 + 10,
+    });
   }
 }
 
