@@ -18,7 +18,7 @@ export default function Index() {
       <p>Browse the collection:</p>
       <ul>
         <li>
-          <Link href="/circles/Hello,%20World!">
+          <Link href="/circles/Hello,%20world!">
             <a>Circles</a>
           </Link>
         </li>
