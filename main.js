@@ -119,19 +119,21 @@ class Circle extends Art {
     this.ctx.arc(x, y, r, 0, 2 * Math.PI);
     this.ctx.stroke();
 
-    // shading
-    for (let myd = r - d; myd > -r; myd -= d) {
-      let mytheta = Math.acos(myd / r);
-      this.ctx.beginPath();
-      this.ctx.moveTo(
-        x + r * Math.cos(mytheta + theta),
-        y + r * Math.sin(mytheta + theta)
-      );
-      this.ctx.lineTo(
-        x + r * Math.cos(-mytheta + theta),
-        y + r * Math.sin(-mytheta + theta)
-      );
-      this.ctx.stroke();
+    // only shade for small enough distances
+    if (d < 20) {
+      for (let myd = r - d; myd > -r; myd -= d) {
+        let mytheta = Math.acos(myd / r);
+        this.ctx.beginPath();
+        this.ctx.moveTo(
+          x + r * Math.cos(mytheta + theta),
+          y + r * Math.sin(mytheta + theta)
+        );
+        this.ctx.lineTo(
+          x + r * Math.cos(-mytheta + theta),
+          y + r * Math.sin(-mytheta + theta)
+        );
+        this.ctx.stroke();
+      }
     }
   }
 
@@ -145,7 +147,7 @@ class Circle extends Art {
       y: y1 * ctx.canvas.height,
       r: r1 * ctx.canvas.width,
       theta: obj["θ1"] * Math.PI,
-      d: d1 * 20 + 10,
+      d: d1 * 100,
     });
 
     this.shadedCircle({
@@ -154,7 +156,7 @@ class Circle extends Art {
       y: y2 * ctx.canvas.height,
       r: r2 * ctx.canvas.width,
       theta: obj["θ2"] * Math.PI,
-      d: d2 * 20 + 10,
+      d: d2 * 200,
     });
   }
 }
