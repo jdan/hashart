@@ -12,6 +12,7 @@
 }
 
 .bytes {
+  font-family: monospace;
   font-weight: bold;
   border-top: 1px solid #666;
   font-size: 18px;

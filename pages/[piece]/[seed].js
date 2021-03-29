@@ -35,6 +35,7 @@ function Hash({ parts }) {
 function Art() {
   const router = useRouter();
   const { piece, seed } = router.query;
+  // Use `piece`
   const art = new Circle();
 
   const [hash, setHash] = useState(null);
@@ -49,16 +50,24 @@ function Art() {
     if (!canvasEl || !hash) return;
     let ctx = canvasEl.current.getContext("2d");
     art.render(ctx, hash);
-  }, [canvasEl, piece, hash]);
+  }, [canvasEl, art, hash]);
+
+  function handleChange(e) {
+    if (/\w/.test(e.target.value)) {
+      router.replace(`/circles/${e.target.value}`);
+    }
+  }
 
   return (
     <main>
       <div className={styles.explanation}>
         <div className={styles.segment}>
-          seed
-          <div className="value-edit-row">
-            <div className={styles.bytes}>{seed}</div>
-          </div>
+          <div>seed</div>
+          <input
+            className={styles.bytes}
+            defaultValue={seed}
+            onChange={handleChange}
+          />
         </div>
       </div>
 
