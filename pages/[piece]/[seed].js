@@ -63,8 +63,11 @@ function Art() {
 
       <div className={styles.explanation}>
         <div className={styles.segment}>
-          <div>seed</div>
+          <div>
+            <label for="seed">seed</label>
+          </div>
           <input
+            id="seed"
             className={styles.bytes}
             defaultValue={seed}
             onChange={handleChange}
