@@ -146,7 +146,7 @@ class Boxes extends Art {
   }
 
   coordToIso(x, y, z) {
-    return [x + 0.3 * z, y - 0.6 * z];
+    return [x + 0.4 * z, y - 0.2 * z];
   }
 
   drawBox(ctx, { x, y, d, w, h }) {
