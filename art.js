@@ -128,6 +128,107 @@ class Circle extends Art {
   }
 }
 
+class Boxes extends Art {
+  constructor() {
+    super({
+      w1: 1,
+      d1: 1,
+      h1: 1,
+
+      w2: 1,
+      d2: 1,
+      h2: 1,
+
+      w3: 1,
+      d3: 1,
+      h3: 1,
+    });
+  }
+
+  coordToIso(x, y, z) {
+    return [x + 0.3 * z, y - 0.6 * z];
+  }
+
+  drawBox(ctx, { x, y, d, w, h }) {
+    const cols = {
+      front: "rgb(240, 240, 240)",
+      top: "rgb(180, 180, 180)",
+      side: "rgb(120, 120, 120)",
+    };
+
+    // front
+    ctx.fillStyle = cols.front;
+    ctx.beginPath();
+    ctx.moveTo(...this.coordToIso(x, y, -d));
+    ctx.lineTo(...this.coordToIso(x, y - h, -d));
+    ctx.lineTo(...this.coordToIso(x + w, y - h, -d));
+    ctx.lineTo(...this.coordToIso(x + w, y, -d));
+    ctx.lineTo(...this.coordToIso(x, y, -d));
+    ctx.fill();
+    ctx.stroke();
+
+    // top
+    ctx.fillStyle = cols.top;
+    ctx.beginPath();
+    ctx.moveTo(...this.coordToIso(x, y - h, -d));
+    ctx.lineTo(...this.coordToIso(x, y - h, 0));
+    ctx.lineTo(...this.coordToIso(x + w, y - h, 0));
+    ctx.lineTo(...this.coordToIso(x + w, y - h, -d));
+    ctx.lineTo(...this.coordToIso(x, y - h, -d));
+    ctx.fill();
+    ctx.stroke();
+
+    // side
+    ctx.fillStyle = cols.side;
+    ctx.beginPath();
+    ctx.moveTo(...this.coordToIso(x + w, y, -d));
+    ctx.lineTo(...this.coordToIso(x + w, y - h, -d));
+    ctx.lineTo(...this.coordToIso(x + w, y - h, 0));
+    ctx.lineTo(...this.coordToIso(x + w, y, 0));
+    ctx.lineTo(...this.coordToIso(x + w, y, -d));
+    ctx.fill();
+    ctx.stroke();
+  }
+
+  draw(ctx, { w1, d1, h1, w2, d2, h2, w3, d3, h3 }) {
+    ctx.fillStyle = "rgba(255, 255, 255, 1)";
+    ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+
+    const x = 0.25 * ctx.canvas.width;
+    const y = 0.7 * ctx.canvas.height;
+
+    const wMin = 20;
+    const dScale = 400;
+    const wScale = 300;
+    const hScale = 600;
+
+    this.drawBox(ctx, {
+      x,
+      y,
+      d: d1 * dScale,
+      w: w1 * wScale + wMin,
+      h: h1 * hScale,
+    });
+
+    this.drawBox(ctx, {
+      x: x + w1 * wScale + wMin,
+      y,
+      d: d2 * dScale,
+      w: w2 * wScale + wMin,
+      h: h2 * hScale,
+    });
+
+    this.drawBox(ctx, {
+      x: x + w1 * wScale + wMin + w2 * wScale + wMin,
+      y,
+      d: d3 * dScale,
+      w: w3 * wScale + wMin,
+      h: h3 * hScale,
+    });
+  }
+}
+
 export default {
   circles: Circle,
+  boxes: Boxes,
 };

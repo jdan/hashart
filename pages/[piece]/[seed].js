@@ -29,7 +29,7 @@ function Hash({ parts }) {
 function Art() {
   const router = useRouter();
   const { piece, seed } = router.query;
-  const art = new pieces[piece]();
+  const art = piece ? new pieces[piece]() : {};
 
   const [hash, setHash] = useState(null);
   useEffect(async () => {
@@ -63,7 +63,7 @@ function Art() {
       <div className={styles.explanation}>
         <div className={styles.segment}>
           <div>
-            <label for="seed">seed</label>
+            <label htmlFor="seed">seed</label>
           </div>
           <input
             id="seed"
