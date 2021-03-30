@@ -131,17 +131,17 @@ class Circle extends Art {
 class Boxes extends Art {
   constructor() {
     super({
-      w1: 1,
-      d1: 1,
-      h1: 1,
+      w1: 2,
+      d1: 2,
+      h1: 2,
 
-      w2: 1,
-      d2: 1,
-      h2: 1,
+      w2: 2,
+      d2: 2,
+      h2: 2,
 
-      w3: 1,
-      d3: 1,
-      h3: 1,
+      w3: 2,
+      d3: 2,
+      h3: 2,
     });
   }
 
