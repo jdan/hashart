@@ -47,8 +47,8 @@ function Art() {
   }, [canvasEl, art, hash]);
 
   function handleChange(e) {
-    if (/\w/.test(e.target.value)) {
-      router.replace(`/${piece}/${e.target.value}`);
+    if (/[^\.\s]/.test(e.target.value)) {
+      router.replace(`/${piece}/${encodeURIComponent(e.target.value)}`);
     }
   }
 
