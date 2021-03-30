@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useState, useEffect, useRef } from "react";
 import classnames from "classnames";
 
-import { Circle } from "../../art.js";
+import pieces from "../../art.js";
 import styles from "./art.module.css";
 
 function Hash({ parts }) {
@@ -29,8 +29,7 @@ function Hash({ parts }) {
 function Art() {
   const router = useRouter();
   const { piece, seed } = router.query;
-  // Use `piece`
-  const art = new Circle();
+  const art = new pieces[piece]();
 
   const [hash, setHash] = useState(null);
   useEffect(async () => {

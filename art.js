@@ -61,7 +61,7 @@ class Art {
   }
 }
 
-export class Circle extends Art {
+class Circle extends Art {
   constructor() {
     super({
       x1: 2,
@@ -127,3 +127,7 @@ export class Circle extends Art {
     });
   }
 }
+
+export default {
+  circles: Circle,
+};

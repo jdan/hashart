@@ -1,4 +1,5 @@
 import Link from "next/link";
+import art from "../art.js";
 
 export default function Index() {
   return (
@@ -17,11 +18,13 @@ export default function Index() {
       </p>
       <p>Browse the collection:</p>
       <ul>
-        <li>
-          <Link href="/circles/Hello,%20world!">
-            <a>Circles</a>
-          </Link>
-        </li>
+        {Object.keys(art).map((name) => (
+          <li>
+            <Link href={`/${name}/Hello,%20world!`}>
+              <a>{name}</a>
+            </Link>
+          </li>
+        ))}
       </ul>
     </main>
   );
