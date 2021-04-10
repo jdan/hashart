@@ -5,6 +5,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "canvas": "^2.7.0",
     "classnames": "^2.2.6",
     "next": "latest",
     "react": "latest",
