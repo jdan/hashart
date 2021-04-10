@@ -9,7 +9,7 @@ app.get("/:piece/:seed.png", (req, res) => {
   const { piece, seed } = req.params;
 
   const art = new pieces[piece]();
-  const canvas = createCanvas(1320, 1320);
+  const canvas = createCanvas(600, 600);
   const ctx = canvas.getContext("2d");
 
   const shaSum = crypto.createHash("sha256");

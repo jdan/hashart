@@ -194,13 +194,15 @@ class Boxes extends Art {
   }
 
   draw(ctx, { w1, d1, h1, w2, d2, h2, w3, d3, h3 }) {
-    const x = 0.25 * ctx.canvas.width;
-    const y = 0.7 * ctx.canvas.height;
+    const w = ctx.canvas.width;
+    const h = ctx.canvas.height;
+    const x = 0.25 * w;
+    const y = 0.7 * h;
 
-    const wMin = 20;
-    const dScale = 400;
-    const wScale = 300;
-    const hScale = 600;
+    const wMin = 20 * (w / 1320);
+    const dScale = 400 * (w / 1320);
+    const wScale = 300 * (w / 1320);
+    const hScale = 600 * (w / 1320);
 
     this.drawBox(ctx, {
       x,
@@ -246,16 +248,16 @@ class Stocks extends Art {
     const name = Array.from(nameBuffer)
       .map((b) => String.fromCharCode((b % 26) + 65))
       .join("");
-    ctx.font = "80px monospace";
+    ctx.font = `${80 * (w / 1320)}px monospace`;
     ctx.fillStyle = "rgb(0, 0, 0)";
-    ctx.fillText("$" + name, 60, h - 80);
+    ctx.fillText("$" + name, 60 * (w / 1320), h - 80 * (w / 1320));
 
     // Graph
-    const leftPadding = 280;
-    const topPadding = 240;
-    const bottomPadding = 420;
-    const barWidth = 20;
-    const barDistance = 34;
+    const leftPadding = 280 * (w / 1320);
+    const topPadding = 240 * (w / 1320);
+    const bottomPadding = 420 * (w / 1320);
+    const barWidth = 20 * (w / 1320);
+    const barDistance = 34 * (w / 1320);
 
     const sticks = [];
     let lastClose = open * 128 + 50;
@@ -305,22 +307,22 @@ class Stocks extends Art {
       });
 
     // Labels
-    const labelPadding = 64;
-    ctx.font = "30px monospace";
+    const labelPadding = 64 * (w / 1320);
+    ctx.font = `${30 * (w / 1320)}px monospace`;
     ctx.textAlign = "right";
     ctx.fillText(
       `${movesBuffer.byteLength}d high: ${max.toFixed(2)}`,
-      w - 80,
-      h - 120
+      w - 80 * (w / 1320),
+      h - 120 * (w / 1320)
     );
     ctx.fillText(
       `${movesBuffer.byteLength}d low: ${min.toFixed(2)}`,
-      w - 80,
-      h - 80
+      w - 80 * (w / 1320),
+      h - 80 * (w / 1320)
     );
 
     // Dates
-    ctx.font = "20px monospace";
+    ctx.font = `${20 * (w / 1320)}px monospace`;
     ctx.textAlign = "left";
 
     function dateFromDay(year, day) {
