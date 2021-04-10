@@ -19,7 +19,7 @@ export default function Index() {
       <p>Browse the collection:</p>
       <ul>
         {Object.keys(art).map((name) => (
-          <li>
+          <li key={name}>
             <Link href={`/${name}/Hello,%20world!`}>
               <a>{name}</a>
             </Link>
