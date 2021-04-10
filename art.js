@@ -360,7 +360,7 @@ class Stocks extends Art {
   }
 }
 
-export default {
+module.exports = {
   circles: Circle,
   boxes: Boxes,
   stocks: Stocks,
