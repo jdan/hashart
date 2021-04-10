@@ -16,6 +16,14 @@ export default function Index() {
         </Link>
         .
       </p>
+
+      <p>
+        Source available{" "}
+        <Link href="https://github.com/jdan/hashart">
+          <a>on GitHub</a>
+        </Link>
+        .
+      </p>
       <p>Browse the collection:</p>
       <ul>
         {Object.keys(art).map((name) => (
