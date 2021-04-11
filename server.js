@@ -27,6 +27,11 @@ app.get("/:piece/:seed.png", (req, res) => {
   art.render(ctx, hash);
   res.set("Content-Type", "image/png");
 
+  /**
+   * `createPNGStream` is handy but unfortunately for my e-ink display
+   * I need a proper Content-Length set. So we'll dump the stream into
+   * a buffer and send it as a whole.
+   */
   var buffs = [];
   const pngStream = canvas.createPNGStream();
   pngStream.on("data", function (d) {
