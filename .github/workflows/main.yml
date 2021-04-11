@@ -14,10 +14,8 @@ jobs:
         id: meta
         uses: crazy-max/ghaction-docker-meta@v2
         with:
-          images: |
-            docker.pkg.github.com/jdan/hashart/docker
-          tags: |
-            type=sha
+          images: jdan/hashart/docker
+          tags: type=sha,prefix=
       - name: Build and push to GitHub Packages
         uses: docker/build-push-action@v1
         with:
