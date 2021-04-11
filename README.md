@@ -19,6 +19,7 @@ This repository contains a small service for rendering art directly to PNGs usin
 
 ```
 node server.js
+# http://localhost:3000/stocks/%40jdan.png
 ```
 
 This service is also contained in a Docker image that I automatically publish to [GitHub packages](https://github.com/jdan/hashart/packages/723220):
