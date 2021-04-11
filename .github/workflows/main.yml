@@ -19,6 +19,7 @@ jobs:
             docker.pkg.github.com/jdan/hashart/docker
           tags: |
             type=sha,prefix=
+            type=raw,value=latest
 
       - name: Log into GitHub Package registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
