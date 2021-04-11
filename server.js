@@ -26,8 +26,17 @@ app.get("/:piece/:seed.png", (req, res) => {
 
   art.render(ctx, hash);
   res.set("Content-Type", "image/png");
-  res.set("Content-Length", "40000");
-  canvas.createPNGStream().pipe(res);
+
+  var buffs = [];
+  const pngStream = canvas.createPNGStream();
+  pngStream.on("data", function (d) {
+    buffs.push(d);
+  });
+  pngStream.on("end", function () {
+    const buff = Buffer.concat(buffs);
+    res.set("Content-Length", buff.byteLength);
+    res.send(buff);
+  });
 });
 
 const port = process.env.VIRTUAL_PORT || 3000;
