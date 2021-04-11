@@ -23,6 +23,7 @@ app.get("/:piece/:seed.png", (req, res) => {
   canvas.createPNGStream().pipe(res);
 });
 
-app.listen(process.env.VIRTUAL_PORT, "0.0.0.0", () => {
-  console.log(`Listening on 0.0.0.0:${process.env.VIRTUAL_PORT}`);
+const port = process.env.VIRTUAL_PORT || 3000;
+app.listen(port, "0.0.0.0", () => {
+  console.log(`Listening on 0.0.0.0:${port}`);
 });
