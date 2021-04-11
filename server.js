@@ -18,6 +18,7 @@ app.get("/:piece/:seed.png", (req, res) => {
   const hash = new Uint8Array(buffer);
 
   art.render(ctx, hash);
+  res.contentType("image/png");
   canvas.createPNGStream().pipe(res);
 });
 
