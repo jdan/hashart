@@ -19,7 +19,7 @@ app.get("/:piece/:seed.png", (req, res) => {
 
   art.render(ctx, hash);
   res.set("Content-Type", "image/png");
-  res.set("Content-Length", "20000");
+  res.set("Content-Length", "40000");
   canvas.createPNGStream().pipe(res);
 });
 
