@@ -3,7 +3,14 @@ const crypto = require("crypto");
 const { createCanvas } = require("canvas");
 const pieces = require("./art.js");
 
-app.get("/", (req, res) => res.send("Ayy"));
+app.get("/", (req, res) => {
+  res.send(`<a href="/stocks/%40jdan.png">/stocks/@jdan.png</a>`);
+});
+
+app.get("/loaderio-027c189a38747b79940b3b6282683540.txt", (req, res) => {
+  res.contentType("text/plain");
+  res.send("loaderio-027c189a38747b79940b3b6282683540");
+});
 
 app.get("/:piece/:seed.png", (req, res) => {
   const { piece, seed } = req.params;
