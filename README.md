@@ -24,5 +24,6 @@ node server.js
 This service is also contained in a Docker image that I automatically publish to [GitHub packages](https://github.com/jdan/hashart/packages/723220):
 
 ```
-docker run -it --rm -p "3000:3000" docker.pkg.github.com/jdan/hashart/docker:latest
+docker run --rm -p "3000:3000" docker.pkg.github.com/jdan/hashart/docker:latest
+# http://localhost:3000/stocks/%40jdan.png
 ```
