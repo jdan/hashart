@@ -10,6 +10,7 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
+
       - name: Generate Docker tag
         id: meta
         uses: crazy-max/ghaction-docker-meta@v2
@@ -18,10 +19,12 @@ jobs:
             docker.pkg.github.com/jdan/hashart/docker
           tags: |
             type=sha,prefix=
+
+      - name: Log into GitHub Package registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+
       - name: Build and push to GitHub Packages
         uses: docker/build-push-action@v2
         with:
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
           push: true
           tags: ${{ steps.meta.outputs.tags }}
