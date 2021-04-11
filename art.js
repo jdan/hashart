@@ -342,7 +342,7 @@ class Stocks extends Art {
 
       ctx.textAlign = "center";
       ctx.fillText(
-        `${date.getMonth()}/${date.getDate()}`,
+        `${date.getMonth() + 1}/${date.getDate()}`,
         leftPadding +
           barDistance * i * ((movesBuffer.byteLength - 1) / markers) +
           barWidth / 2,
