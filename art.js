@@ -258,7 +258,7 @@ class Stocks extends Art {
     ctx.fillText("$" + name, _(60, w), h - _(80, w));
 
     // Graph
-    const leftPadding = _(220, w);
+    const leftPadding = _(236, w);
     const topPadding = _(140, w);
     const bottomPadding = _(400, w);
     let barWidth = _(20, w);
@@ -317,7 +317,7 @@ class Stocks extends Art {
 
     // Labels
     const labelPadding = _(64, w);
-    ctx.font = `${_(30, w)}px monospace`;
+    ctx.font = `${_(36, w)}px monospace`;
     ctx.textAlign = "right";
     ctx.fillText(
       `${movesBuffer.byteLength}d high: ${max.toFixed(2)}`,
@@ -331,7 +331,7 @@ class Stocks extends Art {
     );
 
     // Dates
-    ctx.font = `${_(20, w)}px monospace`;
+    ctx.font = `${_(30, w)}px monospace`;
     ctx.textAlign = "left";
 
     function dateFromDay(year, day) {
