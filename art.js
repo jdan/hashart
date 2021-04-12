@@ -1,3 +1,8 @@
+function _(measurement, width) {
+  // Map a measurement on a 1320px to a given width
+  return Math.round((measurement * width) / 1320);
+}
+
 class Art {
   constructor(template) {
     if (!template) {
@@ -199,10 +204,10 @@ class Boxes extends Art {
     const x = 0.25 * w;
     const y = 0.7 * h;
 
-    const wMin = 20 * (w / 1320);
-    const dScale = 400 * (w / 1320);
-    const wScale = 300 * (w / 1320);
-    const hScale = 600 * (w / 1320);
+    const wMin = _(20, w);
+    const dScale = _(400, w);
+    const wScale = _(300, w);
+    const hScale = _(600, w);
 
     this.drawBox(ctx, {
       x,
@@ -248,16 +253,20 @@ class Stocks extends Art {
     const name = Array.from(nameBuffer)
       .map((b) => String.fromCharCode((b % 26) + 65))
       .join("");
-    ctx.font = `${80 * (w / 1320)}px monospace`;
+    ctx.font = `${_(80, w)}px monospace`;
     ctx.fillStyle = "rgb(0, 0, 0)";
-    ctx.fillText("$" + name, 60 * (w / 1320), h - 80 * (w / 1320));
+    ctx.fillText("$" + name, _(60, w), h - _(80, w));
 
     // Graph
-    const leftPadding = 280 * (w / 1320);
-    const topPadding = 240 * (w / 1320);
-    const bottomPadding = 420 * (w / 1320);
-    const barWidth = 20 * (w / 1320);
-    const barDistance = 34 * (w / 1320);
+    const leftPadding = _(280, w);
+    const topPadding = _(240, w);
+    const bottomPadding = _(420, w);
+    let barWidth = _(20, w);
+    // Make barWidth an odd number
+    barWidth = barWidth % 2 === 0 ? barWidth + 1 : barWidth;
+    const halfBarWidth = Math.floor(barWidth / 2) + 1;
+
+    const barDistance = _(34, w);
 
     const sticks = [];
     let lastClose = open * 128 + 50;
@@ -296,33 +305,33 @@ class Stocks extends Art {
 
         ctx.beginPath();
 
-        ctx.moveTo(x + barWidth / 2, low);
-        ctx.lineTo(x + barWidth / 2, Math.min(open, close));
+        ctx.moveTo(x + halfBarWidth, low);
+        ctx.lineTo(x + halfBarWidth, Math.min(open, close));
 
-        ctx.moveTo(x + barWidth / 2, high);
-        ctx.lineTo(x + barWidth / 2, Math.max(open, close));
+        ctx.moveTo(x + halfBarWidth, high);
+        ctx.lineTo(x + halfBarWidth, Math.max(open, close));
 
         ctx.rect(x, open, barWidth, close - open);
         ctx.stroke();
       });
 
     // Labels
-    const labelPadding = 64 * (w / 1320);
-    ctx.font = `${30 * (w / 1320)}px monospace`;
+    const labelPadding = _(64, w);
+    ctx.font = `${_(30, w)}px monospace`;
     ctx.textAlign = "right";
     ctx.fillText(
       `${movesBuffer.byteLength}d high: ${max.toFixed(2)}`,
-      w - 80 * (w / 1320),
-      h - 120 * (w / 1320)
+      w - _(80, w),
+      h - _(120, w)
     );
     ctx.fillText(
       `${movesBuffer.byteLength}d low: ${min.toFixed(2)}`,
-      w - 80 * (w / 1320),
-      h - 80 * (w / 1320)
+      w - _(80, w),
+      h - _(80, w)
     );
 
     // Dates
-    ctx.font = `${20 * (w / 1320)}px monospace`;
+    ctx.font = `${_(20, w)}px monospace`;
     ctx.textAlign = "left";
 
     function dateFromDay(year, day) {
@@ -345,7 +354,7 @@ class Stocks extends Art {
         `${date.getMonth() + 1}/${date.getDate()}`,
         leftPadding +
           barDistance * i * ((movesBuffer.byteLength - 1) / markers) +
-          barWidth / 2,
+          halfBarWidth,
         h - bottomPadding + labelPadding
       );
     }
