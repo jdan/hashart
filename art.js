@@ -258,15 +258,15 @@ class Stocks extends Art {
     ctx.fillText("$" + name, _(60, w), h - _(80, w));
 
     // Graph
-    const leftPadding = _(280, w);
-    const topPadding = _(240, w);
-    const bottomPadding = _(420, w);
+    const leftPadding = _(220, w);
+    const topPadding = _(140, w);
+    const bottomPadding = _(400, w);
     let barWidth = _(20, w);
     // Make barWidth an odd number
     barWidth = barWidth % 2 === 0 ? barWidth + 1 : barWidth;
     const halfBarWidth = Math.floor(barWidth / 2) + 1;
 
-    const barDistance = _(34, w);
+    const barDistance = _(40, w);
 
     const sticks = [];
     let lastClose = open * 128 + 50;
