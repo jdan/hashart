@@ -76,62 +76,59 @@ class Circle extends Art {
   constructor() {
     super({
       x1: 2,
-      y1: 2,
       r1: 2,
-      // prettier-ignore
-      "θ1": 1,
-      d1: 1,
-
       x2: 2,
-      y2: 2,
       r2: 2,
-      // prettier-ignore
-      "θ2": 1,
-      d2: 1,
+      x3: 2,
+      r3: 2,
+      x4: 2,
+      r4: 2,
     });
   }
 
-  shadedCircle(ctx, { style, x, y, r, theta, d }) {
-    ctx.strokeStyle = style;
+  drawCircle(ctx, x, r) {
+    const h = ctx.canvas.height;
     ctx.beginPath();
-    ctx.arc(x, y, r, 0, 2 * Math.PI);
+    ctx.arc(x, h / 2, r, 0, 2 * Math.PI);
     ctx.stroke();
-
-    // only shade for small enough distances
-    if (d > 0 && d < 20) {
-      for (let myd = r - d; myd > -r; myd -= d) {
-        let mytheta = Math.acos(myd / r);
-        ctx.beginPath();
-        ctx.moveTo(
-          x + r * Math.cos(mytheta + theta),
-          y + r * Math.sin(mytheta + theta)
-        );
-        ctx.lineTo(
-          x + r * Math.cos(-mytheta + theta),
-          y + r * Math.sin(-mytheta + theta)
-        );
-        ctx.stroke();
-      }
-    }
   }
 
-  draw(ctx, { x1, y1, r1, d1, x2, y2, r2, d2, ...obj }) {
-    this.shadedCircle(ctx, {
-      style: "rgb(100, 100, 100)",
-      x: x1 * ctx.canvas.width,
-      y: y1 * ctx.canvas.height,
-      r: r1 * ctx.canvas.width,
-      theta: obj["θ1"] * Math.PI,
-      d: d1 * 100,
+  drawIntersection(ctx, x1, r1, x2, r2) {
+    const h = ctx.canvas.height;
+    const d = x2 - x1;
+
+    const intersectionOffset = (d * d - r2 * r2 + r1 * r1) / (2 * d);
+    const y = Math.sqrt(
+      (4 * d * d * r1 * r1 - Math.pow(d * d - r2 * r2 + r1 * r1, 2)) /
+        (4 * d * d)
+    );
+
+    ctx.beginPath();
+    ctx.moveTo(x1 + intersectionOffset, h / 2 - y);
+    ctx.lineTo(x1 + intersectionOffset, h / 2 + y);
+    ctx.stroke();
+  }
+
+  draw(ctx, { x1, r1, x2, r2, x3, r3, x4, r4 }) {
+    const w = ctx.canvas.width;
+    const h = ctx.canvas.height;
+
+    const xs = [x1, x2, x3, x4].map((x) => Math.round(x * w));
+    const rs = [r1, r2, r3, r4].map((r) => r * 0.6 * w);
+
+    xs.forEach((x, i) => {
+      this.drawCircle(ctx, x, rs[i]);
     });
 
-    this.shadedCircle(ctx, {
-      style: "rgb(51, 51, 51)",
-      x: x2 * ctx.canvas.width,
-      y: y2 * ctx.canvas.height,
-      r: r2 * ctx.canvas.width,
-      theta: obj["θ2"] * Math.PI,
-      d: d2 * 200,
+    [
+      [0, 1],
+      [0, 2],
+      [0, 3],
+      [1, 2],
+      [1, 3],
+      [2, 3],
+    ].forEach(([a, b]) => {
+      this.drawIntersection(ctx, xs[a], rs[a], xs[b], rs[b]);
     });
   }
 }
