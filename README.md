@@ -21,8 +21,8 @@ This repository contains a small service for rendering art directly to PNGs usin
 node server.js
 ```
 
-This service is also contained in a Docker image that I automatically publish to [GitHub packages](https://github.com/jdan/hashart/packages/723220):
+This service is also contained in a Docker image that I automatically publish to [GitHub packages](https://github.com/jdan/hashart/packages/728823):
 
 ```
-docker run --rm -p "3000:3000" docker.pkg.github.com/jdan/hashart/docker:latest
+docker run --rm -p "3000:3000" docker.pkg.github.com/jdan/hashart/hashart-srv:latest
 ```
