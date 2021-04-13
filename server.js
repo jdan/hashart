@@ -4,7 +4,9 @@ const { createCanvas } = require("canvas");
 const pieces = require("./art.js");
 
 app.get("/", (req, res) => {
-  res.send(`<a href="/stocks/%40jdan.png">/stocks/@jdan.png</a>`);
+  res.send(
+    `<a href="/stocks/800/600/%40jdan.png">/stocks/800/600/@jdan.png</a>`
+  );
 });
 
 app.get("/loaderio-027c189a38747b79940b3b6282683540.txt", (req, res) => {
@@ -12,11 +14,11 @@ app.get("/loaderio-027c189a38747b79940b3b6282683540.txt", (req, res) => {
   res.send("loaderio-027c189a38747b79940b3b6282683540");
 });
 
-app.get("/:piece/:seed.png", (req, res) => {
-  const { piece, seed } = req.params;
+app.get("/:piece/:width/:height/:seed.png", (req, res) => {
+  const { piece, seed, width, height } = req.params;
 
   const art = new pieces[piece]();
-  const canvas = createCanvas(600, 600);
+  const canvas = createCanvas(parseInt(width), parseInt(height));
   const ctx = canvas.getContext("2d");
 
   const shaSum = crypto.createHash("sha256");
