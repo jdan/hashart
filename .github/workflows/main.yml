@@ -16,7 +16,7 @@ jobs:
         uses: crazy-max/ghaction-docker-meta@v2
         with:
           images: |
-            docker.pkg.github.com/jdan/hashart/docker
+            docker.pkg.github.com/jdan/hashart/hashart-srv
           tags: |
             type=sha,prefix=
             type=raw,value=latest
