@@ -1,6 +1,9 @@
-function _(measurement, width) {
-  // Map a measurement on a 1320px to a given width
-  return Math.round((measurement * width) / 1320);
+function _(measurement, dimension) {
+  // Map from [0, 1320] to [0, dimension]
+  //
+  // Useful when we know a width of "200" looks good at 1320px and
+  // want to scale it.
+  return Math.round((measurement * dimension) / 1320);
 }
 
 class Art {
@@ -97,6 +100,7 @@ class Circle extends Art {
     const h = ctx.canvas.height;
     const d = x2 - x1;
 
+    // https://mathworld.wolfram.com/Circle-CircleIntersection.html
     const intersectionOffset = (d * d - r2 * r2 + r1 * r1) / (2 * d);
     const y = Math.sqrt(
       (4 * d * d * r1 * r1 - Math.pow(d * d - r2 * r2 + r1 * r1, 2)) /
@@ -120,6 +124,7 @@ class Circle extends Art {
       this.drawCircle(ctx, x, rs[i]);
     });
 
+    // Pair up each circle to draw an intersection chord (if any)
     [
       [0, 1],
       [0, 2],
@@ -256,8 +261,8 @@ class Stocks extends Art {
 
     // Graph
     const leftPadding = _(236, w);
-    const topPadding = _(140, w);
-    const bottomPadding = _(400, w);
+    const topPadding = _(140, h);
+    const bottomPadding = _(400, h);
     let barWidth = _(20, w);
     // Make barWidth an odd number
     barWidth = barWidth % 2 === 0 ? barWidth + 1 : barWidth;
