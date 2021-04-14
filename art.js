@@ -93,6 +93,16 @@ class Circle extends Art {
     });
   }
 
+  getDescription() {
+    return `
+      From the template we gather ${
+        Object.keys(this.template).length / 2
+      } circles and their radii and place
+      them on the horizon. Intersections of these circles (if any) are labeled by drawing a chord between the two
+      intersection points.
+    `;
+  }
+
   drawCircle(ctx, x, r) {
     const h = ctx.canvas.height;
     ctx.beginPath();
@@ -157,6 +167,15 @@ class Boxes extends Art {
       d3: 2,
       h3: 2,
     });
+  }
+
+  getDescription() {
+    return `
+      From the template we gather dimensions for ${
+        Object.keys(this.template).length / 3
+      } boxes and place them
+      next to each other on the ground. The boxes are rendered isometrically with a front-facing light source.
+    `;
   }
 
   coordToIso(x, y, z) {
@@ -249,6 +268,29 @@ class Stocks extends Art {
       open: 1,
       moves: 25,
     });
+  }
+
+  getDescription() {
+    return `
+      We generate a ${this.template.moves}-day <a href="https://en.wikipedia.org/wiki/Candlestick_chart">Candlestick chart</a>
+      using the <code>name</code> buffer to compute a random 4-digit stock symbol.
+      The stock opens at a random value specified by <code>open</code> on a random day generated
+      from <code>date</code>. For each byte in the <code>moves</code> buffer we generate a
+      <code>close</code>, <code>high</code>, and <code>low</code> using the following equations.
+
+      const close = Math.sin(0.1337 * movesBuffer[i]) * closeVariance + open;
+
+      const low =
+        Math.min(open, close) -
+        Math.abs(Math.sin(0.4242 * movesBuffer[i]) * lowHighVariance);
+
+      const high =
+        Math.max(open, close) +
+        Math.abs(Math.sin(0.1729 * movesBuffer[i]) * lowHighVariance);
+
+      These four numbers are used to draw each candlestick, and the global high and low are
+      rendered in the bottom right.
+    `;
   }
 
   draw(ctx, { nameBuffer, date, open, movesBuffer }) {

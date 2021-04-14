@@ -29,7 +29,7 @@ function Hash({ parts }) {
 function Art() {
   const router = useRouter();
   const { piece, seed } = router.query;
-  const art = piece ? new pieces[piece]() : {};
+  const art = piece ? new pieces[piece]() : { getDescription: () => "" };
 
   const [hash, setHash] = useState(null);
   useEffect(async () => {
