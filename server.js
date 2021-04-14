@@ -5,7 +5,14 @@ const pieces = require("./art.js");
 
 app.get("/", (req, res) => {
   res.send(
-    `<a href="/stocks/800/600/%40jdan.png">/stocks/800/600/@jdan.png</a>`
+    "<ul>" +
+      Object.keys(pieces)
+        .map(
+          (name) =>
+            `<li><a href="/${name}/800/600/%40jdan.png">/${name}/800/600/@jdan.png</a></li>`
+        )
+        .join("") +
+      "</ul>"
   );
 });
 
