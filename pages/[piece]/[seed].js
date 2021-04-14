@@ -85,6 +85,17 @@ function Art() {
         height="1320"
       />
 
+      {art.getDescription() ? (
+        <aside className={styles.description}>
+          {art
+            .getDescription()
+            .split(/\n{2,}/)
+            .map((para, idx) => (
+              <p key={idx} dangerouslySetInnerHTML={{ __html: para }} />
+            ))}
+        </aside>
+      ) : null}
+
       <p>
         <Link href="/">
           <a>home</a>

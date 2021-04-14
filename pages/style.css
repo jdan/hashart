@@ -7,3 +7,7 @@ body,
 input {
   font-family: monospace;
 }
+
+code {
+  background-color: #eee;
+}

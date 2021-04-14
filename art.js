@@ -14,6 +14,10 @@ class Art {
     this.template = template;
   }
 
+  getDescription() {
+    return null;
+  }
+
   templateEntries() {
     let usedBytes = Object.values(this.template).reduce((a, b) => a + b, 0);
     return Object.entries(this.template).concat(
@@ -380,6 +384,21 @@ class Collatz extends Art {
     });
   }
 
+  getDescription() {
+    return `
+      We convert <code>input</code> to a number, and use it as the first number in a
+      <a href="https://en.wikipedia.org/wiki/Collatz_conjecture#Statement_of_the_problem">Collatz sequence</a>
+      (i.e. even n => n / 2, odd n => 3n+1) until the number reaches 1.
+
+      Each iteration is drawn as a bit string where 1s are filled and 0s are empty, continuing to the next line and
+      wrapping back to the top when necessary.
+
+      It is unknown if the Collatz sequence reaches 1 for every input, but we know that
+      <a href="https://en.wikipedia.org/wiki/Collatz_conjecture#Undecidable_generalizations">generalized Collatz sequences</a>
+      can be used to perform arbitrary computations and their behavior is therefore undecidable.
+    `;
+  }
+
   static BIT_SIZE = 8;
 
   bufferToBitString(buff) {
@@ -451,7 +470,7 @@ class Collatz extends Art {
 
     ctx.fillStyle = "rgb(0, 0, 0)";
 
-    while (current.length > 0) {
+    while (current.length > 0 && x * Collatz.BIT_SIZE <= ctx.canvas.width) {
       maxWidthOfColumn = Math.max(maxWidthOfColumn, current.length);
       this.drawBitString(
         ctx,
