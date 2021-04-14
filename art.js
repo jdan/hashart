@@ -441,7 +441,9 @@ class Collatz extends Art {
     `;
   }
 
-  static BIT_SIZE = 8;
+  bitSize(ctx) {
+    return _(8, ctx.canvas.height);
+  }
 
   bufferToBitString(buff) {
     let arr = [];
@@ -489,21 +491,18 @@ class Collatz extends Art {
   }
 
   drawBitString(ctx, x, y, bitString) {
+    const bs = this.bitSize(ctx);
     for (let i = 0; i < bitString.length; i++) {
       if (bitString[i]) {
         ctx.beginPath();
-        ctx.rect(
-          x + i * Collatz.BIT_SIZE,
-          y,
-          Collatz.BIT_SIZE,
-          Collatz.BIT_SIZE
-        );
+        ctx.rect(x + i * bs, y, bs, bs);
         ctx.fill();
       }
     }
   }
 
   draw(ctx, { inputBuffer }) {
+    const bs = this.bitSize(ctx);
     let x = 0;
     let y = 0;
     let current = this.bufferToBitString(inputBuffer);
@@ -512,14 +511,9 @@ class Collatz extends Art {
 
     ctx.fillStyle = "rgb(0, 0, 0)";
 
-    while (current.length > 0 && x * Collatz.BIT_SIZE <= ctx.canvas.width) {
+    while (current.length > 0 && x * bs <= ctx.canvas.width) {
       maxWidthOfColumn = Math.max(maxWidthOfColumn, current.length);
-      this.drawBitString(
-        ctx,
-        x * Collatz.BIT_SIZE,
-        y * Collatz.BIT_SIZE,
-        current
-      );
+      this.drawBitString(ctx, x * bs, y * bs, current);
 
       // Make sure we draw the `1` bit :)
       if (current.length == 1) {
@@ -532,7 +526,7 @@ class Collatz extends Art {
       y++;
 
       const GAP = 2;
-      if (y * Collatz.BIT_SIZE >= ctx.canvas.height) {
+      if (y * bs >= ctx.canvas.height) {
         y = 0;
         x += maxWidthOfColumn + GAP;
         maxWidthOfColumn = 0;
