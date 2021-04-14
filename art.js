@@ -373,8 +373,116 @@ class Stocks extends Art {
   }
 }
 
+class Collatz extends Art {
+  constructor() {
+    super({
+      input: 8,
+    });
+  }
+
+  static BIT_SIZE = 8;
+
+  bufferToBitString(buff) {
+    let arr = [];
+    for (let i = 0; i < buff.byteLength; i++) {
+      arr = arr.concat(
+        buff[i]
+          .toString(2)
+          .padStart(8, "0")
+          .split("")
+          .map((s) => parseInt(s))
+      );
+    }
+    return arr;
+  }
+
+  halfBitString(bitString) {
+    return bitString.slice(1);
+  }
+
+  addBitString(a, b) {
+    const result = [];
+    const maxLength = Math.max(a.length, b.length);
+    let carry = 0;
+    for (let i = 0; i < maxLength; i++) {
+      const a_ = a[i] || 0;
+      const b_ = b[i] || 0;
+      const sum = a_ + b_ + carry;
+      result.push(sum % 2);
+      carry = sum > 1 ? 1 : 0;
+    }
+    if (carry) {
+      result.push(carry);
+    }
+    return result;
+  }
+
+  triplePlusOneBitString(bitString) {
+    const doubleBitString = [0].concat(bitString);
+    return this.addBitString(
+      // 3n
+      this.addBitString(bitString, doubleBitString),
+      // +1
+      [1]
+    );
+  }
+
+  drawBitString(ctx, x, y, bitString) {
+    for (let i = 0; i < bitString.length; i++) {
+      if (bitString[i]) {
+        ctx.beginPath();
+        ctx.rect(
+          x + i * Collatz.BIT_SIZE,
+          y,
+          Collatz.BIT_SIZE,
+          Collatz.BIT_SIZE
+        );
+        ctx.fill();
+      }
+    }
+  }
+
+  draw(ctx, { inputBuffer }) {
+    let x = 0;
+    let y = 0;
+    let current = this.bufferToBitString(inputBuffer);
+
+    let maxWidthOfColumn = 0;
+
+    ctx.fillStyle = "rgb(0, 0, 0)";
+
+    while (current.length > 0) {
+      maxWidthOfColumn = Math.max(maxWidthOfColumn, current.length);
+      this.drawBitString(
+        ctx,
+        x * Collatz.BIT_SIZE,
+        y * Collatz.BIT_SIZE,
+        current
+      );
+
+      // Make sure we draw the `1` bit :)
+      if (current.length == 1) {
+        break;
+      }
+
+      current = current[0]
+        ? this.triplePlusOneBitString(current)
+        : this.halfBitString(current);
+      y++;
+
+      const GAP = 2;
+      if (y * Collatz.BIT_SIZE >= ctx.canvas.height) {
+        y = 0;
+        x += maxWidthOfColumn + GAP;
+        maxWidthOfColumn = 0;
+      }
+    }
+  }
+}
+
 module.exports = {
   circles: Circle,
   boxes: Boxes,
   stocks: Stocks,
+  collatz: Collatz,
 };
