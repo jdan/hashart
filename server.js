@@ -16,11 +16,6 @@ app.get("/", (req, res) => {
   );
 });
 
-app.get("/loaderio-027c189a38747b79940b3b6282683540.txt", (req, res) => {
-  res.contentType("text/plain");
-  res.send("loaderio-027c189a38747b79940b3b6282683540");
-});
-
 app.get("/:piece/:width/:height/:seed.png", (req, res) => {
   const { piece, seed, width, height } = req.params;
 
