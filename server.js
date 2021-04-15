@@ -4,21 +4,29 @@ const { createCanvas } = require("canvas");
 const pieces = require("./art.js");
 
 app.get("/", (req, res) => {
-  res.send(
-    "<ul>" +
-      Object.keys(pieces)
+  res.send(`
+    Provide a piece, width, height, and seed
+    <ul>
+      ${Object.keys(pieces)
         .map(
           (name) =>
-            `<li><a href="/${name}/800/600/%40jdan.png">/${name}/800/600/@jdan.png</a></li>`
+            `<li><a href="/${name}/800/600/jdan.png">/${name}/800/600/jdan.png</a></li>`
         )
-        .join("") +
-      "</ul>"
-  );
+        .join("")}
+    </ul>
+
+    Provide a piece and have the server pick a random seed
+    <ul>
+      <li><a href="/stocks/800/600/random.png">/stocks/800/600/random.png</a></li>
+    </ul>
+
+    Have the server pick both the piece and seed
+    <ul>
+      <li><a href="/random/800/600/random.png">/random/800/600/random.png</a></li>
+    </ul>`);
 });
 
-app.get("/:piece/:width/:height/:seed.png", (req, res) => {
-  const { piece, seed, width, height } = req.params;
-
+function sendArt(res, { piece, width, height, seed }) {
   const art = new pieces[piece]();
   const canvas = createCanvas(parseInt(width), parseInt(height));
   const ctx = canvas.getContext("2d");
@@ -46,6 +54,28 @@ app.get("/:piece/:width/:height/:seed.png", (req, res) => {
     res.set("Content-Length", buff.byteLength);
     res.send(buff);
   });
+}
+
+app.get("/random/:width/:height/random.png", (req, res) => {
+  const { width, height } = req.params;
+
+  const pieceKeys = Object.keys(pieces);
+  const piece = pieceKeys[Math.floor(Math.random() * pieceKeys.length)];
+  const seed = Math.random() + "";
+
+  sendArt(res, { piece, seed, width, height });
+});
+
+app.get("/:piece/:width/:height/random.png", (req, res) => {
+  const { piece, width, height } = req.params;
+  const seed = Math.random() + "";
+
+  sendArt(res, { piece, seed, width, height });
+});
+
+app.get("/:piece/:width/:height/:seed.png", (req, res) => {
+  const { piece, seed, width, height } = req.params;
+  sendArt(res, { piece, seed, width, height });
 });
 
 const port = process.env.VIRTUAL_PORT || 3000;
