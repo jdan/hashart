@@ -1,6 +1,6 @@
 ## hashart
 
-The code behind [hash.jordanscales.com](https://hash.jordanscales.com/stocks/%40jdan), an experiment in turning SHA-256 hashes into pixels.
+The code behind [hash.jordanscales.com](https://hash.jordanscales.com), an experiment in turning SHA-256 hashes into pixels.
 
 ![a screenshot of https://hash.jordanscales.com/circles/Hello,%20world!](https://user-images.githubusercontent.com/287268/114740072-810f3c00-9d17-11eb-9bad-e1d09f6521e2.png)
 
