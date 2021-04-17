@@ -23,7 +23,13 @@ app.get("/", (req, res) => {
     Have the server pick both the piece and seed
     <ul>
       <li><a href="/random/800/600/random.png">/random/800/600/random.png</a></li>
-    </ul>`);
+    </ul>
+
+    Provide a piece and seed with a default resolution of 1320x1320
+    <ul>
+      <li><a href="/collatz/jdan.png">/collatz/jdan.png</a></li>
+    </ul>
+  `);
 });
 
 function sendArt(res, { piece, width, height, seed }) {
@@ -76,6 +82,11 @@ app.get("/:piece/:width/:height/random.png", (req, res) => {
 app.get("/:piece/:width/:height/:seed.png", (req, res) => {
   const { piece, seed, width, height } = req.params;
   sendArt(res, { piece, seed, width, height });
+});
+
+app.get("/:piece/:seed.png", (req, res) => {
+  const { piece, seed } = req.params;
+  sendArt(res, { piece, seed, width: 1320, height: 1320 });
 });
 
 const port = process.env.VIRTUAL_PORT || 3000;
