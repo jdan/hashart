@@ -16,6 +16,8 @@ app.get("/", (req, res) => {
             `<li><a href="/${name}/800/600/jdan.png">/${name}/800/600/jdan.png</a></li>`
         )
         .join("")}
+
+        <li><a href="/mario/800/600/jdan.png">/mario/800/600/jdan.png</a> (requires $ROOT/vendor/rom.nes)</li>
     </ul>
 
     Provide a piece and have the server pick a random seed
