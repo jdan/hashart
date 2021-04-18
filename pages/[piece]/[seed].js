@@ -26,7 +26,7 @@ function Hash({ parts }) {
   );
 }
 
-function Art() {
+function Art(props) {
   const router = useRouter();
   const { piece, seed } = router.query;
   const art = piece ? new pieces[piece]() : { getDescription: () => "" };
@@ -43,7 +43,7 @@ function Art() {
   useEffect(() => {
     if (!canvasEl || !hash) return;
     let ctx = canvasEl.current.getContext("2d");
-    art.render(ctx, hash);
+    art.render(ctx, hash, props);
   }, [canvasEl, art, hash]);
 
   function handleChange(e) {

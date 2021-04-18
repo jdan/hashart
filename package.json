@@ -1,6 +1,7 @@
 {
   "scripts": {
     "dev": "next dev",
+    "dev:server": "nodemon server.js",
     "build": "next build",
     "start": "next start"
   },
@@ -8,8 +9,12 @@
     "canvas": "^2.7.0",
     "classnames": "^2.2.6",
     "express": "^4.17.1",
+    "jsnes": "^1.1.0",
     "next": "latest",
     "react": "latest",
     "react-dom": "latest"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
   }
 }

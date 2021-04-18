@@ -1,6 +1,8 @@
 const app = require("express")();
 const crypto = require("crypto");
 const { createCanvas } = require("canvas");
+const fs = require("fs");
+const jsnes = require("jsnes");
 const pieces = require("./art.js");
 
 app.get("/", (req, res) => {
@@ -8,6 +10,7 @@ app.get("/", (req, res) => {
     Provide a piece, width, height, and seed
     <ul>
       ${Object.keys(pieces)
+        .filter((name) => name !== "mario")
         .map(
           (name) =>
             `<li><a href="/${name}/800/600/jdan.png">/${name}/800/600/jdan.png</a></li>`
@@ -37,12 +40,33 @@ function sendArt(res, { piece, width, height, seed }) {
   const canvas = createCanvas(parseInt(width), parseInt(height));
   const ctx = canvas.getContext("2d");
 
+  let props = {};
+  if (piece === "mario") {
+    let latestFrameBuffer = null;
+    const nes = new jsnes.NES({
+      onFrame: function (frameBuffer) {
+        latestFrameBuffer = frameBuffer;
+      },
+    });
+    const romData = fs.readFileSync("./vendor/rom.nes", {
+      encoding: "binary",
+    });
+    nes.loadROM(romData);
+
+    props = {
+      nes,
+      getFrameBuffer() {
+        return latestFrameBuffer;
+      },
+    };
+  }
+
   const shaSum = crypto.createHash("sha256");
   shaSum.update(seed);
   const buffer = shaSum.digest();
   const hash = new Uint8Array(buffer);
 
-  art.render(ctx, hash);
+  art.render(ctx, hash, props);
   res.set("Content-Type", "image/png");
 
   /**
@@ -91,5 +115,5 @@ app.get("/:piece/:seed.png", (req, res) => {
 
 const port = process.env.VIRTUAL_PORT || 3000;
 app.listen(port, "0.0.0.0", () => {
-  console.log(`Listening on 0.0.0.0:${port}`);
+  console.log(`Listening on http://localhost:${port}`);
 });

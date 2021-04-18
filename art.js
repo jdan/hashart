@@ -54,7 +54,7 @@ class Art {
     }
   }
 
-  render(ctx, buffer) {
+  render(ctx, buffer, props) {
     let idx = 0;
     let obj = {};
 
@@ -70,7 +70,7 @@ class Art {
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     ctx.fillStyle = "rgba(255, 255, 255, 1)";
     ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-    this.draw(ctx, obj);
+    this.draw(ctx, obj, props);
     ctx.restore();
   }
 
@@ -535,9 +535,53 @@ class Collatz extends Art {
   }
 }
 
+class Mario extends Art {
+  constructor() {
+    super({
+      inputs: 32,
+    });
+  }
+
+  drawBuffer(ctx, frameBuffer) {
+    const WIDTH = 256;
+    const HEIGHT = 240;
+    // https://github.com/bfirsh/jsnes-web/blob/master/src/Screen.js
+    const imageData = ctx.getImageData(0, 0, WIDTH, HEIGHT);
+    const buf = new ArrayBuffer(imageData.data.length);
+    const buf8 = new Uint8ClampedArray(buf);
+    const buf32 = new Uint32Array(buf);
+
+    // Set alpha
+    for (var i = 0; i < buf32.length; ++i) {
+      buf32[i] = 0xff000000;
+    }
+
+    var i = 0;
+    for (var y = 0; y < HEIGHT; ++y) {
+      for (var x = 0; x < WIDTH; ++x) {
+        i = y * WIDTH + x;
+        // Convert pixel from NES BGR to canvas ABGR
+        buf32[i] = 0xff000000 | frameBuffer[i]; // Full alpha
+      }
+    }
+
+    imageData.data.set(buf8);
+    ctx.putImageData(imageData, 0, 0);
+  }
+
+  draw(ctx, { inputsBuffer }, { nes, getFrameBuffer }) {
+    for (let i = 0; i < 200; i++) {
+      nes.frame();
+    }
+
+    this.drawBuffer(ctx, getFrameBuffer());
+  }
+}
+
 module.exports = {
   circles: Circle,
   boxes: Boxes,
   stocks: Stocks,
   collatz: Collatz,
+  mario: Mario,
 };

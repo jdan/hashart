@@ -26,13 +26,15 @@ export default function Index() {
       </p>
       <p>Browse the collection:</p>
       <ul>
-        {Object.keys(art).map((name) => (
-          <li key={name}>
-            <Link href={`/${name}/Hello,%20world!`}>
-              <a>{name}</a>
-            </Link>
-          </li>
-        ))}
+        {Object.keys(art)
+          .filter((k) => k !== "mario")
+          .map((name) => (
+            <li key={name}>
+              <Link href={`/${name}/Hello,%20world!`}>
+                <a>{name}</a>
+              </Link>
+            </li>
+          ))}
       </ul>
     </main>
   );
