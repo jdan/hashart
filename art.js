@@ -623,21 +623,27 @@ class Mario extends Art {
       nes.frame();
     }
 
+    // Walk right for 30 frames
+    // TODO: Store this state somewhere?
+    this.buttonPress(nes, BUTTON_RIGHT, 30);
+
     inputsBuffer.forEach((v) => {
       const options = [
-        BUTTON_LEFT,
+        //BUTTON_LEFT,
         BUTTON_UP,
         BUTTON_RIGHT,
         BUTTON_RIGHT,
         BUTTON_RIGHT,
         BUTTON_RIGHT,
+        BUTTON_LEFT,
+        BUTTON_A,
         BUTTON_A,
         BUTTON_B,
       ];
 
       const button = options[Math.floor((v / 256) * options.length)];
-      // hold for 60 frames
-      this.buttonPress(nes, button, 60);
+      // hold for 5 frames
+      this.buttonPress(nes, button, 5);
     });
 
     this.drawBuffer(ctx, getFrameBuffer());
