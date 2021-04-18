@@ -536,6 +536,7 @@ class Collatz extends Art {
 }
 
 class Mario extends Art {
+  // requires SRC_ROOT/vendor/rom.nes
   constructor() {
     super({
       inputs: 32,
@@ -545,28 +546,44 @@ class Mario extends Art {
   drawBuffer(ctx, frameBuffer) {
     const WIDTH = 256;
     const HEIGHT = 240;
+    const verticalPadding = 8;
+    const horizontalPadding = 8;
+
     // https://github.com/bfirsh/jsnes-web/blob/master/src/Screen.js
-    const imageData = ctx.getImageData(0, 0, WIDTH, HEIGHT);
+    const imageData = ctx.getImageData(
+      0,
+      0,
+      WIDTH - 2 * horizontalPadding,
+      HEIGHT - 2 * verticalPadding
+    );
     const buf = new ArrayBuffer(imageData.data.length);
-    const buf8 = new Uint8ClampedArray(buf);
     const buf32 = new Uint32Array(buf);
 
-    // Set alpha
-    for (var i = 0; i < buf32.length; ++i) {
-      buf32[i] = 0xff000000;
-    }
-
-    var i = 0;
-    for (var y = 0; y < HEIGHT; ++y) {
-      for (var x = 0; x < WIDTH; ++x) {
-        i = y * WIDTH + x;
+    // TODO: 10px border on either side
+    for (let y = verticalPadding; y < HEIGHT - verticalPadding; ++y) {
+      for (let x = horizontalPadding; x < WIDTH - horizontalPadding; ++x) {
+        const nesPx = y * WIDTH + x;
+        const bufPx =
+          (y - verticalPadding) * (WIDTH - 2 * horizontalPadding) +
+          (x - horizontalPadding);
         // Convert pixel from NES BGR to canvas ABGR
-        buf32[i] = 0xff000000 | frameBuffer[i]; // Full alpha
+        buf32[bufPx] = 0xff000000 | frameBuffer[nesPx]; // Full alpha
       }
     }
 
-    imageData.data.set(buf8);
+    imageData.data.set(new Uint8ClampedArray(buf));
     ctx.putImageData(imageData, 0, 0);
+
+    // turn off antialiasing
+    ctx.imageSmoothingEnabled = false;
+    const scale = Math.min(
+      ctx.canvas.width / (WIDTH - 2 * horizontalPadding),
+      ctx.canvas.height / (HEIGHT - 2 * verticalPadding)
+    );
+
+    ctx.scale(scale, scale);
+    // TODO - center and draw some black/white bars
+    ctx.drawImage(ctx.canvas, 0, 0);
   }
 
   buttonPress(nes, button) {
