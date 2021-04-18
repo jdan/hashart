@@ -26,3 +26,9 @@ This service is also contained in a Docker image that I automatically publish to
 ```
 docker run --rm -p "3000:3000" docker.pkg.github.com/jdan/hashart/hashart-srv:latest
 ```
+
+To be able to use the "mario" piece:
+
+```
+docker run --rm -p "3000:3000" -v "/path/to/mariobros.nes:/app/vendor/rom.nes" docker.pkg.github.com/jdan/hashart/hashart-srv:latest
+```
