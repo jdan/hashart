@@ -586,9 +586,11 @@ class Mario extends Art {
     ctx.drawImage(ctx.canvas, 0, 0);
   }
 
-  buttonPress(nes, button) {
+  buttonPress(nes, button, holdFrames = 1) {
     nes.buttonDown(1, button);
-    nes.frame();
+    for (let i = 0; i < holdFrames; i++) {
+      nes.frame();
+    }
     nes.buttonUp(1, button);
     nes.frame();
   }
@@ -607,7 +609,6 @@ class Mario extends Art {
     for (let i = 0; i < 137; i++) {
       nes.frame();
     }
-
     this.buttonPress(nes, BUTTON_START);
 
     // Load in mario (how many frames?)
@@ -621,6 +622,23 @@ class Mario extends Art {
     for (let i = 0; i < 162; i++) {
       nes.frame();
     }
+
+    inputsBuffer.forEach((v) => {
+      const options = [
+        BUTTON_LEFT,
+        BUTTON_UP,
+        BUTTON_RIGHT,
+        BUTTON_RIGHT,
+        BUTTON_RIGHT,
+        BUTTON_RIGHT,
+        BUTTON_A,
+        BUTTON_B,
+      ];
+
+      const button = options[Math.floor((v / 256) * options.length)];
+      // hold for 60 frames
+      this.buttonPress(nes, button, 60);
+    });
 
     this.drawBuffer(ctx, getFrameBuffer());
   }
