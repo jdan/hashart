@@ -89,7 +89,7 @@ function sendArt(res, { piece, width, height, seed }) {
 app.get("/random/:width/:height/random.png", (req, res) => {
   const { width, height } = req.params;
 
-  const pieceKeys = Object.keys(pieces);
+  const pieceKeys = Object.keys(pieces).filter((name) => name !== "mario");
   const piece = pieceKeys[Math.floor(Math.random() * pieceKeys.length)];
   const seed = Math.random() + "";
 
