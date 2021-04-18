@@ -569,8 +569,39 @@ class Mario extends Art {
     ctx.putImageData(imageData, 0, 0);
   }
 
+  buttonPress(nes, button) {
+    nes.buttonDown(1, button);
+    nes.frame();
+    nes.buttonUp(1, button);
+    nes.frame();
+  }
+
   draw(ctx, { inputsBuffer }, { nes, getFrameBuffer }) {
-    for (let i = 0; i < 200; i++) {
+    const BUTTON_A = 0;
+    const BUTTON_B = 1;
+    const BUTTON_SELECT = 2;
+    const BUTTON_START = 3;
+    const BUTTON_UP = 4;
+    const BUTTON_DOWN = 5;
+    const BUTTON_LEFT = 6;
+    const BUTTON_RIGHT = 7;
+
+    // Load (how many frames?)
+    for (let i = 0; i < 137; i++) {
+      nes.frame();
+    }
+
+    this.buttonPress(nes, BUTTON_START);
+
+    // Load in mario (how many frames?)
+    for (let i = 0; i < 31; i++) {
+      nes.frame();
+    }
+
+    this.buttonPress(nes, BUTTON_START);
+
+    // Load 1-1
+    for (let i = 0; i < 162; i++) {
       nes.frame();
     }
 
