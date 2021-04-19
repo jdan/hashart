@@ -598,34 +598,10 @@ class Mario extends Art {
   draw(ctx, { inputsBuffer }, { nes, getFrameBuffer }) {
     const BUTTON_A = 0;
     const BUTTON_B = 1;
-    const BUTTON_SELECT = 2;
-    const BUTTON_START = 3;
     const BUTTON_UP = 4;
     const BUTTON_DOWN = 5;
     const BUTTON_LEFT = 6;
     const BUTTON_RIGHT = 7;
-
-    // Load (how many frames?)
-    for (let i = 0; i < 137; i++) {
-      nes.frame();
-    }
-    this.buttonPress(nes, BUTTON_START);
-
-    // Load in mario (how many frames?)
-    for (let i = 0; i < 31; i++) {
-      nes.frame();
-    }
-
-    this.buttonPress(nes, BUTTON_START);
-
-    // Load 1-1
-    for (let i = 0; i < 162; i++) {
-      nes.frame();
-    }
-
-    // Walk right for 30 frames
-    // TODO: Store this state somewhere?
-    this.buttonPress(nes, BUTTON_RIGHT, 30);
 
     inputsBuffer.forEach((v) => {
       const options = [

@@ -4,6 +4,9 @@ const { createCanvas } = require("canvas");
 const fs = require("fs");
 const jsnes = require("jsnes");
 const pieces = require("./art.js");
+const generateState = require("./scripts/generate-state.js");
+
+const state = generateState();
 
 app.get("/", (req, res) => {
   res.send(`
@@ -44,16 +47,20 @@ function sendArt(res, { piece, width, height, seed }) {
 
   let props = {};
   if (piece === "mario") {
+    if (!state) {
+      res.send("State snapshot not found (does $ROOT/vendor/rom.nes exist?)");
+      return;
+    }
+
     let latestFrameBuffer = null;
     const nes = new jsnes.NES({
       onFrame: function (frameBuffer) {
         latestFrameBuffer = frameBuffer;
       },
     });
-    const romData = fs.readFileSync("./vendor/rom.nes", {
-      encoding: "binary",
-    });
-    nes.loadROM(romData);
+
+    nes.fromJSON(JSON.parse(state));
+    nes.frame();
 
     props = {
       nes,
