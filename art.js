@@ -618,8 +618,8 @@ class Mario extends Art {
       ];
 
       const button = options[Math.floor((v / 256) * options.length)];
-      // hold for 5 frames
-      this.buttonPress(nes, button, 5);
+      // hold for 10 frames
+      this.buttonPress(nes, button, 10);
     });
 
     this.drawBuffer(ctx, getFrameBuffer());
