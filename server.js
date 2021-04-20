@@ -37,6 +37,11 @@ app.get("/", (req, res) => {
     <ul>
       <li><a href="/collatz/jdan.png">/collatz/jdan.png</a></li>
     </ul>
+
+    Display a 5x5 grid of randomly generated pieces
+    <ul>
+      <li><a href="/circles/grid">/circles/grid</a></li>
+    </ul>
   `);
 });
 
@@ -106,6 +111,38 @@ app.get("/random/:width/:height/random.png", (req, res) => {
   const seed = Math.random() + "";
 
   sendArt(res, { piece, seed, width, height });
+});
+
+app.get("/:piece/grid", (req, res) => {
+  const { piece } = req.params;
+
+  let images = "";
+  for (let i = 0; i < 25; i++) {
+    const seed = Math.random() + "";
+    images += `<a href="/${piece}/${seed}.png"><img alt="" src="/${piece}/256/256/${seed}.png"></a>`;
+  }
+
+  res.send(`
+    <!doctype html>
+    <html>
+    <head>
+      <title>${piece} grid</title>
+      <style>
+        #grid {
+          display: grid;
+          grid-template-columns: repeat(5, 256px);
+          row-gap: 12px;
+          column-gap: 12px;
+        }
+      </style>
+    </head>
+    <body>
+      <div id="grid">
+        ${images}
+      </div>
+    </body>
+    </html>
+  `);
 });
 
 app.get("/:piece/:width/:height/random.png", (req, res) => {
