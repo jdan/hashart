@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState, useEffect, useRef } from "react";
 import classnames from "classnames";
+import debounce from "lodash.debounce";
 
 import pieces from "../../art.js";
 import styles from "./art.module.css";
@@ -69,8 +70,9 @@ function Art(props) {
             id="seed"
             className={styles.bytes}
             defaultValue={seed}
-            onChange={handleChange}
+            onChange={art.debounce ? debounce(handleChange, 200) : handleChange}
           />
+          {art.debounce ? " (debounced for performance)" : null}
         </div>
       </div>
 
@@ -85,10 +87,10 @@ function Art(props) {
         height="1320"
       />
 
-      {art.getDescription() ? (
+      {hash && art.description(hash) ? (
         <aside className={styles.description}>
           {art
-            .getDescription()
+            .description(hash)
             .split(/\n{2,}/)
             .map((para, idx) => (
               <p key={idx} dangerouslySetInnerHTML={{ __html: para }} />
