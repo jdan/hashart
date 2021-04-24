@@ -661,7 +661,7 @@ class Chess extends Art {
       for each byte in <code>moves</code>, we cycle through the list of <em>all</em> possible moves
       and choose the one at the index specified by the byte (modulo the length of the list of moves).
 
-      Even though each player only players 8 moves, they're probably not very good moves so
+      Even though each player only plays 8 moves, they're probably not very good moves so
       you're likely to generate a never-seen-before game.
 
       If you'd like to analyze or continue the game above, you can do so by heading to
