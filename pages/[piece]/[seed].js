@@ -61,9 +61,15 @@ function Art(props) {
 
       <div className={styles.header}>
         <h1>{piece}</h1>
-        <Link href="/">
-          <a>home</a>
-        </Link>
+        <div>
+          <Link href="/">
+            <a>home</a>
+          </Link>
+          {" . "}
+          <Link href="https://github.com/jdan/hashart/blob/main/art.js">
+            <a>github</a>
+          </Link>
+        </div>
       </div>
 
       <div className={styles.explanation}>
