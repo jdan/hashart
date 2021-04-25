@@ -59,7 +59,12 @@ function Art(props) {
         <title>{piece}</title>
       </Head>
 
-      <h1>{piece}</h1>
+      <div className={styles.header}>
+        <h1>{piece}</h1>
+        <Link href="/">
+          <a>home</a>
+        </Link>
+      </div>
 
       <div className={styles.explanation}>
         <div className={styles.segment}>
@@ -97,12 +102,6 @@ function Art(props) {
             ))}
         </aside>
       ) : null}
-
-      <p>
-        <Link href="/">
-          <a>home</a>
-        </Link>
-      </p>
     </main>
   );
 }

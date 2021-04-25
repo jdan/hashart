@@ -4,7 +4,10 @@ import art from "../art.js";
 export default function Index() {
   return (
     <main>
-      <h1>hash</h1>
+      <div style={{ display: "flex" }}>
+        <h1>hash</h1>
+      </div>
+
       <p>
         Art generated from{" "}
         <Link href="https://en.wikipedia.org/wiki/SHA-2">
