@@ -3,7 +3,7 @@ const crypto = require("crypto");
 const { createCanvas } = require("canvas");
 const fs = require("fs");
 const jsnes = require("jsnes");
-const pieces = require("./art.js");
+const pieces = require("./art/pieces.js");
 const generateState = require("./scripts/generate-state.js");
 
 const state = generateState();

@@ -5,7 +5,7 @@ import { useState, useEffect, useRef } from "react";
 import classnames from "classnames";
 import debounce from "lodash.debounce";
 
-import pieces from "../../art.js";
+import pieces from "../../art/pieces.js";
 import styles from "./art.module.css";
 
 function Hash({ parts }) {
@@ -65,10 +65,16 @@ function Art(props) {
           <Link href="/">
             <a>home</a>
           </Link>
-          {" . "}
-          <Link href="https://github.com/jdan/hashart/blob/main/art.js">
-            <a>github</a>
-          </Link>
+          {art.filename ? (
+            <>
+              {" . "}
+              <Link
+                href={`https://github.com/jdan/hashart/blob/main/art/${art.filename}`}
+              >
+                <a>github</a>
+              </Link>
+            </>
+          ) : null}
         </div>
       </div>
 

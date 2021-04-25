@@ -1,5 +1,5 @@
 import Link from "next/link";
-import art from "../art.js";
+import pieces from "../art/pieces.js";
 
 export default function Index() {
   return (
@@ -29,7 +29,7 @@ export default function Index() {
       </p>
       <p>Browse the collection:</p>
       <ul>
-        {Object.keys(art)
+        {Object.keys(pieces)
           .filter((k) => k !== "mario")
           .map((name) => (
             <li key={name}>
