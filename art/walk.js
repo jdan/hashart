@@ -30,13 +30,15 @@ class Walk extends Art {
     let pos = { x: 0, y: 0 };
     const path = [pos];
 
-    const bits = Array.from(turnsBuffer).flatMap((byte) => {
-      return byte
-        .toString(2)
-        .padStart(8, "0")
-        .split("")
-        .map((i) => parseInt(i));
-    });
+    const bits = Array.from(turnsBuffer)
+      .map((byte) => {
+        return byte
+          .toString(2)
+          .padStart(8, "0")
+          .split("")
+          .map((i) => parseInt(i));
+      })
+      .reduce((acc, bits) => acc.concat(bits));
 
     bits.forEach((bit) => {
       // TODO: get 8 turns from each one?
