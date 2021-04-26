@@ -13,10 +13,11 @@ class Walk extends Art {
   getDescription() {
     return `
       We illustrate a <a href="https://en.wikipedia.org/wiki/Random_walk">random walk</a>, starting at
-      (0, 0) with a direction of "east."
+      (0, 0) with a direction of "east." For each bit in the <code>moves</code> buffer (256 in total):
+      we walk forward, then turn "left" if the bit is <code>1</code> and "right" if it is <code>0</code>.
 
-      For each byte in the <code>moves</code> buffer, we walk forward, then turn "left" if
-      the byte is odd or "right" if it is even.
+      There is no underlying pattern to the illustration since it is a random walk. This is in contrast
+      to the elegance of one of my favorite patterns, <a href="https://en.wikipedia.org/wiki/Dragon_curve">the dragon curve</a>.
     `;
   }
 
@@ -29,7 +30,15 @@ class Walk extends Art {
     let pos = { x: 0, y: 0 };
     const path = [pos];
 
-    Array.from(turnsBuffer).forEach((byte) => {
+    const bits = Array.from(turnsBuffer).flatMap((byte) => {
+      return byte
+        .toString(2)
+        .padStart(8, "0")
+        .split("")
+        .map((i) => parseInt(i));
+    });
+
+    bits.forEach((bit) => {
       // TODO: get 8 turns from each one?
       pos = {
         x: pos.x + WALK_LENGTH * dir.dx,
@@ -40,21 +49,21 @@ class Walk extends Art {
       if (dir.dx === 1) {
         dir = {
           dx: 0,
-          dy: byte % 2 === 0 ? -1 : 1,
+          dy: bit ? -1 : 1,
         };
       } else if (dir.dy === 1) {
         dir = {
-          dx: byte % 2 === 0 ? 1 : -1,
+          dx: bit ? 1 : -1,
           dy: 0,
         };
       } else if (dir.dx === -1) {
         dir = {
           dx: 0,
-          dy: byte % 2 === 0 ? 1 : -1,
+          dy: bit ? 1 : -1,
         };
       } else {
         dir = {
-          dx: byte % 2 === 0 ? -1 : 1,
+          dx: bit ? -1 : 1,
           dy: 0,
         };
       }
