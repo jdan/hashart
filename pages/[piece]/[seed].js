@@ -104,15 +104,23 @@ function Art(props) {
         height="1320"
       />
 
+      {art.created ? (
+        <p>
+          <em>
+            <strong>{art.created}</strong>
+          </em>
+        </p>
+      ) : null}
+
       {hash && art.description(hash) ? (
-        <aside className={styles.description}>
+        <>
           {art
             .description(hash)
             .split(/\n{2,}/)
             .map((para, idx) => (
               <p key={idx} dangerouslySetInnerHTML={{ __html: para }} />
             ))}
-        </aside>
+        </>
       ) : null}
     </main>
   );

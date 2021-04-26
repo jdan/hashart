@@ -4,6 +4,7 @@ const { Stocks } = require("./stocks.js");
 const { Collatz } = require("./collatz.js");
 const { Mario } = require("./mario.js");
 const { Chess } = require("./chess.js");
+const { Walk } = require("./walk.js");
 
 module.exports = {
   circles: Circle,
@@ -12,4 +13,5 @@ module.exports = {
   collatz: Collatz,
   mario: Mario,
   chess: Chess,
+  walk: Walk,
 };
