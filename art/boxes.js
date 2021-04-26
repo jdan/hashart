@@ -4,17 +4,10 @@ const { _ } = require("./util.js");
 class Boxes extends Art {
   constructor() {
     super({
-      w1: 2,
-      d1: 2,
-      h1: 2,
-
-      w2: 2,
-      d2: 2,
-      h2: 2,
-
-      w3: 2,
-      d3: 2,
-      h3: 2,
+      box1: 6,
+      box2: 6,
+      box3: 6,
+      box4: 6,
     });
 
     this.filename = "boxes.js";
@@ -24,9 +17,14 @@ class Boxes extends Art {
   getDescription() {
     return `
       From the template we gather dimensions for ${
-        Object.keys(this.template).length / 3
+        Object.keys(this.template).length
       } boxes and place them
-      next to each other on the ground. The boxes are rendered isometrically with a front-facing light source.
+      next to each other on the ground.
+
+      Each box is represented as six bytes, which is divided into three sections
+      for width, depth, and height respectively.
+
+      The boxes are rendered isometrically with a front-facing light source.
     `;
   }
 
@@ -34,7 +32,7 @@ class Boxes extends Art {
     return [x + 0.4 * z, y - 0.2 * z];
   }
 
-  drawBox(ctx, { x, y, d, w, h }) {
+  drawBox(ctx, { x, y, w, d, h }) {
     const cols = {
       front: "rgb(240, 240, 240)",
       top: "rgb(180, 180, 180)",
@@ -75,7 +73,7 @@ class Boxes extends Art {
     ctx.stroke();
   }
 
-  draw(ctx, { w1, d1, h1, w2, d2, h2, w3, d3, h3 }) {
+  draw(ctx, { box1Buffer, box2Buffer, box3Buffer, box4Buffer }) {
     const w = ctx.canvas.width;
     const h = ctx.canvas.height;
     const x = 0.25 * w;
@@ -85,6 +83,22 @@ class Boxes extends Art {
     const dScale = _(400, w);
     const wScale = _(300, w);
     const hScale = _(600, w);
+
+    const w1 = (256 * box1Buffer[0] + box1Buffer[1]) / 65536;
+    const d1 = (256 * box1Buffer[2] + box1Buffer[3]) / 65536;
+    const h1 = (256 * box1Buffer[4] + box1Buffer[5]) / 65536;
+
+    const w2 = (256 * box2Buffer[0] + box2Buffer[1]) / 65536;
+    const d2 = (256 * box2Buffer[2] + box2Buffer[3]) / 65536;
+    const h2 = (256 * box2Buffer[4] + box2Buffer[5]) / 65536;
+
+    const w3 = (256 * box3Buffer[0] + box3Buffer[1]) / 65536;
+    const d3 = (256 * box3Buffer[2] + box3Buffer[3]) / 65536;
+    const h3 = (256 * box3Buffer[4] + box3Buffer[5]) / 65536;
+
+    const w4 = (256 * box4Buffer[0] + box4Buffer[1]) / 65536;
+    const d4 = (256 * box4Buffer[2] + box4Buffer[3]) / 65536;
+    const h4 = (256 * box4Buffer[4] + box4Buffer[5]) / 65536;
 
     this.drawBox(ctx, {
       x,
@@ -108,6 +122,14 @@ class Boxes extends Art {
       d: d3 * dScale,
       w: w3 * wScale + wMin,
       h: h3 * hScale,
+    });
+
+    this.drawBox(ctx, {
+      x: x + w1 * wScale + wMin + w2 * wScale + wMin + w3 * wScale + wMin,
+      y,
+      d: d4 * dScale,
+      w: w4 * wScale + wMin,
+      h: h4 * hScale,
     });
   }
 }
