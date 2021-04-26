@@ -3,6 +3,10 @@ body {
   width: 660px;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 body,
 input {
   font-family: monospace;
