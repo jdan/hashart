@@ -33,6 +33,12 @@ export default function Index() {
           .filter((k) => k !== "mario")
           .map((name) => (
             <li key={name}>
+              {new pieces[name]().created ? (
+                <>
+                  <em>{new pieces[name]().created}</em>
+                  {" - "}
+                </>
+              ) : null}
               <Link href={`/${name}/Hello,%20world!`}>
                 <a>{name}</a>
               </Link>
