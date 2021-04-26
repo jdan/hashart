@@ -8,6 +8,7 @@ class Mario extends Art {
       inputs: 32,
     });
     this.filename = "mario.js";
+    this.created = "18 Apr 2021";
   }
 
   drawBuffer(ctx, frameBuffer) {

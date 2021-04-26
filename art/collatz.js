@@ -7,6 +7,7 @@ class Collatz extends Art {
       input: 8,
     });
     this.filename = "collatz.js";
+    this.created = "14 Apr 2021";
   }
 
   getDescription() {

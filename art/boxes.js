@@ -18,6 +18,7 @@ class Boxes extends Art {
     });
 
     this.filename = "boxes.js";
+    this.created = "29 Mar 2021";
   }
 
   getDescription() {

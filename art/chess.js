@@ -13,6 +13,7 @@ class Chess extends Art {
     });
     this.debounce = true;
     this.filename = "chess.js";
+    this.created = "24 Apr 2021";
   }
 
   getDescription({ movesBuffer }) {

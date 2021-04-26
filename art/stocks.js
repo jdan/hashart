@@ -10,6 +10,7 @@ class Stocks extends Art {
       moves: 25,
     });
     this.filename = "stocks.js";
+    this.created = "18 Apr 2021";
   }
 
   getDescription() {
