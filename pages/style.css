@@ -6,8 +6,17 @@ body {
 body,
 input {
   font-family: monospace;
+  font-size: 15px;
 }
 
 code {
   background-color: #eee;
+}
+
+ul {
+  padding-left: 2ch;
+}
+
+li {
+  padding: 2px 0;
 }
