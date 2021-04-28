@@ -60,6 +60,8 @@ function Art({ piece, seed, hashString }) {
           property="og:image"
           content={`https://hashpng.jordanscales.com/${piece}/1200/630/${seed}.png`}
         />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:creator" content="@jdan" />
       </Head>
 
       <div className={styles.header}>
