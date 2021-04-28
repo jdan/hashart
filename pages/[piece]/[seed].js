@@ -136,6 +136,7 @@ export async function getServerSideProps(context) {
   shaSum.update(seed);
   const buffer = shaSum.digest();
 
+  // TODO: Remove me I just want netlify to build
   return {
     props: {
       piece,
