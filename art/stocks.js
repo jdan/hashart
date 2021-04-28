@@ -47,7 +47,7 @@ class Stocks extends Art {
       .join("");
     ctx.font = `${_(80, s)}px monospace`;
     ctx.fillStyle = "rgb(0, 0, 0)";
-    ctx.fillText("$" + name, _(60, w), h - _(80, w));
+    ctx.fillText("$" + name, _(60, w), h - _(80, h));
 
     // Graph
     const leftPadding = _(236, w);
@@ -114,12 +114,12 @@ class Stocks extends Art {
     ctx.fillText(
       `${movesBuffer.byteLength}d high: ${max.toFixed(2)}`,
       w - _(80, w),
-      h - _(120, w)
+      h - _(120, h)
     );
     ctx.fillText(
       `${movesBuffer.byteLength}d low: ${min.toFixed(2)}`,
       w - _(80, w),
-      h - _(80, w)
+      h - _(80, h)
     );
 
     // Dates
