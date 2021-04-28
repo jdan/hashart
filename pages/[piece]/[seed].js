@@ -1,7 +1,7 @@
+import crypto from "crypto";
 import Head from "next/head";
 import Link from "next/link";
-import { useRouter } from "next/router";
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import classnames from "classnames";
 import debounce from "lodash.debounce";
 
@@ -27,25 +27,16 @@ function Hash({ parts }) {
   );
 }
 
-function Art(props) {
-  const router = useRouter();
-  const { piece, seed } = router.query;
-  const art = piece ? new pieces[piece]() : { getDescription: () => "" };
-
-  const [hash, setHash] = useState(null);
-  useEffect(async () => {
-    if (!seed) return;
-    const stringBuffer = new TextEncoder().encode(seed);
-    const buffer = await crypto.subtle.digest("SHA-256", stringBuffer);
-    setHash(new Uint8Array(buffer));
-  }, [seed]);
+function Art({ piece, seed, hashString }) {
+  const art = new pieces[piece]();
+  const hash = new Uint8Array(Buffer.from(hashString, "hex"));
 
   const canvasEl = useRef(null);
   useEffect(() => {
     if (!canvasEl || !hash) return;
     let ctx = canvasEl.current.getContext("2d");
-    art.render(ctx, hash, props);
-  }, [canvasEl, art, hash]);
+    art.render(ctx, hash);
+  }, [canvasEl, art, hashString]);
 
   function handleChange(e) {
     if (/[^\.\s]/.test(e.target.value)) {
@@ -138,3 +129,18 @@ function Art(props) {
 }
 
 export default Art;
+
+export async function getServerSideProps(context) {
+  const { piece, seed } = context.params;
+  const shaSum = crypto.createHash("sha256");
+  shaSum.update(seed);
+  const buffer = shaSum.digest();
+
+  return {
+    props: {
+      piece,
+      seed,
+      hashString: buffer.toString("hex"),
+    },
+  };
+}
