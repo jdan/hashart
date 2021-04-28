@@ -82,7 +82,7 @@ class Boxes extends Art {
     const wMin = _(20, w);
     const dScale = _(400, w);
     const wScale = _(300, w);
-    const hScale = _(600, w);
+    const hScale = _(600, h);
 
     const w1 = (256 * box1Buffer[0] + box1Buffer[1]) / 65536;
     const d1 = (256 * box1Buffer[2] + box1Buffer[3]) / 65536;
