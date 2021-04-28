@@ -7,6 +7,7 @@ export default function Index() {
     <main>
       <Head>
         <title>index | hash.jordanscales.com</title>
+        <meta property="og:type" content="website" />
         <meta property="og:title" content="hash.jordanscales.com" />
         <meta
           property="og:description"
