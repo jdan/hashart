@@ -39,12 +39,13 @@ class Stocks extends Art {
   draw(ctx, { nameBuffer, date, open, movesBuffer }) {
     const w = ctx.canvas.width;
     const h = ctx.canvas.height;
+    const s = Math.min(w, h);
 
     // Name
     const name = Array.from(nameBuffer)
       .map((b) => String.fromCharCode((b % 26) + 65))
       .join("");
-    ctx.font = `${_(80, w)}px monospace`;
+    ctx.font = `${_(80, s)}px monospace`;
     ctx.fillStyle = "rgb(0, 0, 0)";
     ctx.fillText("$" + name, _(60, w), h - _(80, w));
 
@@ -108,7 +109,7 @@ class Stocks extends Art {
 
     // Labels
     const labelPadding = _(64, w);
-    ctx.font = `${_(36, w)}px monospace`;
+    ctx.font = `${_(36, s)}px monospace`;
     ctx.textAlign = "right";
     ctx.fillText(
       `${movesBuffer.byteLength}d high: ${max.toFixed(2)}`,
@@ -122,7 +123,7 @@ class Stocks extends Art {
     );
 
     // Dates
-    ctx.font = `${_(30, w)}px monospace`;
+    ctx.font = `${_(30, s)}px monospace`;
     ctx.textAlign = "left";
 
     function dateFromDay(year, day) {

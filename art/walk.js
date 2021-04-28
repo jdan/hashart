@@ -79,7 +79,7 @@ class Walk extends Art {
 
     const PADDING = _(120, s);
 
-    ctx.lineWidth = 6;
+    ctx.lineWidth = _(6, s);
     ctx.beginPath();
     path.forEach(({ x, y }, idx) => {
       const x_ =
