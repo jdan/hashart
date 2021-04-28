@@ -16,6 +16,8 @@ export default function Index() {
           property="og:image"
           content="https://hashpng.jordanscales.com/walk/1200/630/fulls.png"
         />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:creator" content="@jdan" />
       </Head>
 
       <div style={{ display: "flex" }}>
