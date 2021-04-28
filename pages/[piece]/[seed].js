@@ -56,7 +56,16 @@ function Art(props) {
   return (
     <main>
       <Head>
-        <title>{piece}</title>
+        <title>{piece} | hash.jordanscales.com</title>
+        <meta
+          property="og:title"
+          content={`${piece} | hash.jordanscales.com`}
+        />
+        <meta property="og:description" content={`seed = ${seed}`} />
+        <meta
+          property="og:image"
+          content={`https://hashpng.jordanscales.com/${piece}/1200/630/${seed}.png`}
+        />
       </Head>
 
       <div className={styles.header}>

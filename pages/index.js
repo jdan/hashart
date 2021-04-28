@@ -1,9 +1,23 @@
+import Head from "next/head";
 import Link from "next/link";
 import pieces from "../art/pieces.js";
 
 export default function Index() {
   return (
     <main>
+      <Head>
+        <title>index | hash.jordanscales.com</title>
+        <meta property="og:title" content="hash.jordanscales.com" />
+        <meta
+          property="og:description"
+          content="Procedural, deterministic art using SHA256 hashes"
+        />
+        <meta
+          property="og:image"
+          content="https://hashpng.jordanscales.com/walk/1200/630/fulls.png"
+        />
+      </Head>
+
       <div style={{ display: "flex" }}>
         <h1>hash</h1>
       </div>
