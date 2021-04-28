@@ -50,11 +50,12 @@ function Art({ piece, seed, hashString }) {
     <main>
       <Head>
         <title>{piece} | hash.jordanscales.com</title>
+        <meta property="og:type" content="website" />
         <meta
           property="og:title"
           content={`${piece} | hash.jordanscales.com`}
         />
-        <meta property="og:description" content={`seed = ${seed}`} />
+        <meta property="og:description" content={`seed: ${seed}`} />
         <meta
           property="og:image"
           content={`https://hashpng.jordanscales.com/${piece}/1200/630/${seed}.png`}
