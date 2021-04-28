@@ -28,6 +28,7 @@ function Hash({ parts }) {
 }
 
 function Art({ piece, seed, hashString }) {
+  const router = useRouter();
   const art = new pieces[piece]();
   const hash = new Uint8Array(Buffer.from(hashString, "hex"));
 
@@ -136,7 +137,6 @@ export async function getServerSideProps(context) {
   shaSum.update(seed);
   const buffer = shaSum.digest();
 
-  // TODO: Remove me I just want netlify to build
   return {
     props: {
       piece,
