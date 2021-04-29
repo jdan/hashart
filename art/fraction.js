@@ -35,16 +35,15 @@ class Fraction extends Art {
   }
 
   drawFraction(ctx, fontSize, lineHeight, numer, denom, x, y, maxWidth) {
+    const oneCharWidth = ctx.measureText("0").width;
     const numerWidth = ctx.measureText(numer.toString()).width;
     const denomWidth = Math.min(
-      maxWidth,
+      Math.floor(maxWidth / oneCharWidth) * oneCharWidth,
       ctx.measureText(denom.toString()).width
     );
 
     ctx.fillText(
       numer.toString(),
-      // Ideally we want a line which precisely covers the digits, which, if split
-      // into lines because of `maxWidth` will be slightly smaller than `maxWidth`.
       x + (denomWidth - numerWidth) / 2,
       y + fontSize
     );
@@ -53,7 +52,6 @@ class Fraction extends Art {
     ctx.lineTo(x + denomWidth, y + lineHeight);
     ctx.stroke();
 
-    const oneCharWidth = ctx.measureText("0").width;
     const charsPerLine = Math.floor(maxWidth / oneCharWidth);
     const denomString = denom.toString();
     let line = 0;
