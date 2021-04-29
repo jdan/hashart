@@ -5,6 +5,7 @@ const { Collatz } = require("./collatz.js");
 const { Mario } = require("./mario.js");
 const { Chess } = require("./chess.js");
 const { Walk } = require("./walk.js");
+const { Fraction } = require("./fraction.js");
 
 module.exports = {
   circles: Circle,
@@ -14,4 +15,5 @@ module.exports = {
   mario: Mario,
   chess: Chess,
   walk: Walk,
+  fraction: Fraction,
 };
