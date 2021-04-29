@@ -35,7 +35,7 @@ class Fraction extends Art {
   }
 
   drawFraction(ctx, fontSize, lineHeight, numer, denom, x, y, maxWidth) {
-    // If we've run out of room
+    // If we've halted iteration or run into an error
     if (denom === "...") {
       ctx.fillText("...", x, y + lineHeight);
       return ctx.measureText("...");
@@ -118,7 +118,8 @@ class Fraction extends Art {
       2 * equationPadding;
 
     let idx = 0;
-    for (; numer > 0 && idx < 15; idx++) {
+    const MAX_ITERATION = 15;
+    for (; numer > 0 && idx < MAX_ITERATION; idx++) {
       if (denom % numer === 0n) {
         fractions.push(denom / numer);
         break;
@@ -128,7 +129,7 @@ class Fraction extends Art {
       fractions.push(greedy);
 
       // numer/denom - 1/greedy
-      // (numer*greedy)/denom*greedy -
+      // (numer*greedy)/(denom*greedy) - denom/(denom*greedy)
       try {
         numer = numer * greedy - denom;
         denom = denom * greedy;
@@ -137,6 +138,7 @@ class Fraction extends Art {
       }
     }
 
+    // If we've run into an error or halted iteration for time
     if (denom % numer !== 0n) {
       fractions.push("...");
     }
