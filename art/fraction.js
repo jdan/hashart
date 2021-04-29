@@ -66,7 +66,7 @@ class Fraction extends Art {
 
     return {
       width: denomWidth,
-      height: (line + 1) * lineHeight,
+      height: lineHeight + line * fontSize,
     };
   }
 
