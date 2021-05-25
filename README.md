@@ -6,8 +6,6 @@ The code behind [hash.jordanscales.com](https://hash.jordanscales.com), an exper
 
 ### running
 
-
-
 ```
 npm i
 npm run dev
@@ -32,3 +30,10 @@ To be able to use the "mario" piece:
 ```
 docker run --rm -p "3000:3000" -v "/path/to/mariobros.nes:/app/vendor/rom.nes" docker.pkg.github.com/jdan/hashart/hashart-srv:latest
 ```
+
+### rendering hashart on screens
+
+I uploaded [arduino.cc](/arduino.cc) to an [Inkplate 6](https://inkplate.io/) to display random
+hashart pieces in my apartment. I framed my inkplate using [Level Frames](https://www.levelframes.com/frames/new?width=5.25&height=4) (5 1/4" x 4" with 1 1/2" matting) and gave it a [2000mAh battery](https://www.adafruit.com/product/2011) which lasts quite a long time.
+
+![A photo of two stuffed animals next to a wooden frame with a digital screen in the middle of it. The screen contains a piece of art consisting of semicircles stacked on top of each other tightly, almost resembling a Slinky, scattered around the canvas](https://user-images.githubusercontent.com/287268/119571180-0a864500-bd7f-11eb-8e04-f039b8b98c04.png)
