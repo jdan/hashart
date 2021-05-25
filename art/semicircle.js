@@ -20,6 +20,9 @@ class Semicircle extends Art {
       } semicircles,
       each built by extracting an <code>x, y, count, distance, direction</code> tuple from
       the buffer.
+
+      This piece was inspired by the amazing semicircles in Saskia Freeke's "Geometric Shapes"
+      [<a href="https://twitter.com/sasj_nl/status/1397256403996184579">link</a>].
     `;
   }
 
