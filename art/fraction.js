@@ -4,8 +4,8 @@ const { _ } = require("./util.js");
 class Fraction extends Art {
   constructor() {
     super({
-      a: 6,
-      b: 6,
+      a: 4,
+      b: 4,
     });
     this.filename = "fraction.js";
     this.created = "29 Apr 2021";
@@ -89,7 +89,7 @@ class Fraction extends Art {
     const leftPadding = _(30, w);
     const topPadding = _(30, h);
 
-    const f = 20;
+    const f = 36;
     const fontSize = _(f, w);
     const lineHeight = _(f * 1.2, w);
 
@@ -118,7 +118,7 @@ class Fraction extends Art {
       2 * equationPadding;
 
     let idx = 0;
-    const MAX_ITERATION = 15;
+    const MAX_ITERATION = 20;
     for (; numer > 0 && idx < MAX_ITERATION; idx++) {
       if (denom % numer === 0n) {
         fractions.push(denom / numer);
