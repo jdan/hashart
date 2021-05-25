@@ -6,6 +6,7 @@ const { Mario } = require("./mario.js");
 const { Chess } = require("./chess.js");
 const { Walk } = require("./walk.js");
 const { Fraction } = require("./fraction.js");
+const { Semicircle } = require("./semicircle.js");
 
 module.exports = {
   circles: Circle,
@@ -16,4 +17,5 @@ module.exports = {
   chess: Chess,
   walk: Walk,
   fraction: Fraction,
+  semicircle: Semicircle,
 };
