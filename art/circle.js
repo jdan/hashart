@@ -53,6 +53,7 @@ class Circle extends Art {
   draw(ctx, { x1, r1, x2, r2, x3, r3, x4, r4 }) {
     const w = ctx.canvas.width;
     const h = ctx.canvas.height;
+    ctx.lineWidth = 3;
 
     const xs = [x1, x2, x3, x4].map((x) => Math.round(x * w));
     const rs = [r1, r2, r3, r4].map((r) => r * 0.6 * w);
