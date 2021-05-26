@@ -1,12 +1,15 @@
-const app = require("express")();
+const express = require("express");
 const crypto = require("crypto");
 const { createCanvas } = require("canvas");
-const fs = require("fs");
+const ejs = require("ejs");
 const jsnes = require("jsnes");
 const pieces = require("./art/pieces.js");
 const generateState = require("./scripts/generate-state.js");
 
 const state = generateState();
+const app = express();
+
+app.use(express.json());
 
 app.get("/", (req, res) => {
   res.send(`
@@ -41,6 +44,11 @@ app.get("/", (req, res) => {
     Display a 5x5 grid of randomly generated pieces
     <ul>
       <li><a href="/circles/grid">/circles/grid</a></li>
+    </ul>
+
+    Adjust the pieces that appear in the random rotation
+    <ul>
+      <li><a href="/admin">/admin</a> (requires <code>ADMIN_PASSWORD</code> environment variable)</li>
     </ul>
   `);
 });
@@ -100,13 +108,64 @@ function sendArt(res, { piece, width, height, seed }) {
   });
 }
 
+let enabledPieces = new Set(Object.keys(pieces));
+
+app.get("/admin", (req, res) => {
+  if (!process.env.ADMIN_PASSWORD) {
+    res.statusCode = 404;
+    res.send("Not found");
+  } else {
+    ejs.renderFile(
+      "admin.ejs",
+      {
+        pieces: Object.keys(pieces),
+        enabledPieces,
+      },
+      (err, str) => {
+        if (err) {
+          res.statusCode = 500;
+          res.send("Error");
+        } else {
+          res.send(str);
+        }
+      }
+    );
+  }
+});
+
+app.post("/admin", (req, res) => {
+  if (
+    !process.env.ADMIN_PASSWORD ||
+    req.header("Authorization") !== `Bearer ${process.env.ADMIN_PASSWORD}`
+  ) {
+    res.statusCode = 404;
+    res.send("Not found");
+  } else {
+    Object.keys(req.body).forEach((key) => {
+      if (req.body[key]) {
+        enabledPieces.add(key);
+      } else {
+        enabledPieces.delete(key);
+      }
+    });
+
+    if (enabledPieces.size === 0) {
+      res.statusCode = 404;
+      res.send("Not found");
+      enabledPieces = new Set(Object.keys(pieces));
+    } else {
+      res.send("Ok");
+    }
+  }
+});
+
 app.get("/random/:width/:height/random.png", (req, res) => {
   const { width, height } = req.params;
 
   const pieceKeys =
     state == null
-      ? Object.keys(pieces).filter((name) => name !== "mario")
-      : Object.keys(pieces);
+      ? Array.from(enabledPieces).filter((name) => name !== "mario")
+      : Array.from(enabledPieces);
   const piece = pieceKeys[Math.floor(Math.random() * pieceKeys.length)];
   const seed = Math.random() + "";
 

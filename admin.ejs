@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+<head>
+  <title>Admin console</title>
+</head>
+<body>
+  <h1>Enabled pieces</h1>
+
+  <form id="admin-form" method="POST" action="/admin">
+
+    <% pieces.forEach((piece) => { %>
+      <div class="field">
+        <label>
+          <input
+            type="checkbox"
+            class="piece-input"
+            name="<%= piece %>"
+            <%= enabledPieces.has(piece) ? "checked" : "" %>
+          />
+          <%= piece %>
+        </label>
+      </div>
+    <% }) %>
+
+    <div class="field">
+      <label>
+        Password:
+        <input id="admin-password" type="password" />
+      </label>
+    </div>
+
+    <input type="submit" value="Submit" />
+  </form>
+
+  <script>
+    document.getElementById("admin-form").addEventListener("submit", (e) => {
+      const body = {}
+      Array.from(document.getElementsByClassName("piece-input")).forEach(($input) => {
+        body[$input.name] = $input.checked
+      })
+
+      e.preventDefault();
+      fetch("/admin", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${document.getElementById("admin-password").value}`
+        },
+        body: JSON.stringify(body)
+      }).then((response) => {
+        if (!response.ok) {
+          alert("Could not save")
+        } else {
+          alert("Preferences saved")
+        }
+      }).catch(() => {
+        alert("Could not save")
+      })
+    })
+  </script>
+</body>
+</html>
