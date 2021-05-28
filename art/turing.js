@@ -4,14 +4,16 @@ const { _ } = require("./util.js");
 class Turing extends Art {
   constructor() {
     super({
-      "α₀": 3,
-      "β₀": 3,
-      "γ₀": 3,
-      "δ₀": 3,
-      "α₁": 3,
-      "β₁": 3,
-      "γ₁": 3,
-      "δ₁": 3,
+      init: 2,
+      seed: 3,
+      α0: 3,
+      β0: 3,
+      γ0: 3,
+      δ0: 3,
+      α1: 3,
+      β1: 3,
+      γ1: 3,
+      δ1: 3,
     });
     this.filename = "turing.js";
     this.created = "28 May 2021";
@@ -28,16 +30,16 @@ class Turing extends Art {
 
     return {
       0: {
-        α: triplet("α₀"),
-        β: triplet("β₀"),
-        γ: triplet("γ₀"),
-        δ: triplet("δ₀"),
+        α: triplet("α0"),
+        β: triplet("β0"),
+        γ: triplet("γ0"),
+        δ: triplet("δ0"),
       },
       1: {
-        α: triplet("α₁"),
-        β: triplet("β₁"),
-        γ: triplet("γ₁"),
-        δ: triplet("δ₁"),
+        α: triplet("α1"),
+        β: triplet("β1"),
+        γ: triplet("γ1"),
+        δ: triplet("δ1"),
       },
     };
   }
@@ -117,8 +119,6 @@ class Turing extends Art {
   drawTape(ctx, tape, bitSize, y) {
     ctx.fillStyle = "rgb(0, 0, 0)";
 
-    console.log(tape);
-
     const start = Math.floor(tape.length / 4);
     const end = Math.floor((3 / 4) * tape.length);
     for (let i = start; i < end; i++) {
@@ -134,12 +134,16 @@ class Turing extends Art {
     const w = ctx.canvas.width;
     const h = ctx.canvas.height;
 
-    const bitSize = _(8, w);
+    const bitSize = _(12, w);
     let tape = Array.from({
       length: 2 * Math.floor(Math.max(w, h) / bitSize) + 2,
-    }).map((_) => 0);
+    }).map((_) => {
+      const n = Math.sin(10000 * params.seed++);
+      const rng = n - Math.floor(n);
+      return Math.round(rng);
+    });
     let cursorPosition = Math.floor(tape.length / 2);
-    let state = "α";
+    let state = "αβγδ"[Math.floor(params.init * 4)];
 
     const table = this.transitionTable(params);
 
