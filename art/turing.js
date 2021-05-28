@@ -8,12 +8,10 @@ class Turing extends Art {
       "β₀": 3,
       "γ₀": 3,
       "δ₀": 3,
-      "ε₀": 3,
       "α₁": 3,
       "β₁": 3,
       "γ₁": 3,
       "δ₁": 3,
-      "ε₁": 3,
     });
     this.filename = "turing.js";
     this.created = "28 May 2021";
@@ -24,7 +22,7 @@ class Turing extends Art {
       return {
         write: Math.floor((params[key + "Buffer"][0] / 256) * 2),
         move: Math.floor((params[key + "Buffer"][1] / 256) * 2),
-        nextState: "αβγδε"[Math.floor((params[key + "Buffer"][0] / 256) * 5)],
+        nextState: "αβγδ"[Math.floor((params[key + "Buffer"][0] / 256) * 4)],
       };
     }
 
@@ -34,14 +32,12 @@ class Turing extends Art {
         β: triplet("β₀"),
         γ: triplet("γ₀"),
         δ: triplet("δ₀"),
-        ε: triplet("ε₀"),
       },
       1: {
         α: triplet("α₁"),
         β: triplet("β₁"),
         γ: triplet("γ₁"),
         δ: triplet("δ₁"),
-        ε: triplet("ε₁"),
       },
     };
   }
@@ -50,7 +46,7 @@ class Turing extends Art {
     const table = this.transitionTable(params);
     const body = [0, 1]
       .map((i) => {
-        const row = "αβγδε"
+        const row = "αβγδ"
           .split("")
           .map((state) => {
             const entry = table[i][state];
@@ -80,12 +76,8 @@ class Turing extends Art {
             <th colspan="3">State β</th>
             <th colspan="3">State γ</th>
             <th colspan="3">State δ</th>
-            <th colspan="3">State ε</th>
           </tr>
           <tr>
-            <td>Write</td>
-            <td>Move</td>
-            <td>State</td>
             <td>Write</td>
             <td>Move</td>
             <td>State</td>
