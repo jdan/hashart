@@ -28,3 +28,7 @@
 .segment {
   margin-right: 8px;
 }
+
+.paragraph {
+  margin: 1em 0;
+}

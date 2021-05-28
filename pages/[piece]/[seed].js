@@ -124,7 +124,11 @@ function Art({ piece, seed, hashString }) {
               .description(hash)
               .split(/\n{2,}/)
               .map((para, idx) => (
-                <p key={idx} dangerouslySetInnerHTML={{ __html: para }} />
+                <div
+                  className={styles.paragraph}
+                  key={idx}
+                  dangerouslySetInnerHTML={{ __html: para }}
+                />
               ))}
           </>
         ) : null}
