@@ -101,10 +101,28 @@ class Turing extends Art {
 
   getDescription(params) {
     return `
-      We illustrate a 4-state <a href="https://en.wikipedia.org/wiki/Turing_machine">Turing machine</a>
+      From the hash we construct a 4-state
+      <a href="https://en.wikipedia.org/wiki/Turing_machine">Turing machine</a>
       with the following transition table:
 
       ${this.transitionTableHtml(params)}
+
+      We begin at state <strong>${
+        "αβγδ"[Math.floor(params.init * 4)]
+      }</strong> via
+      the <code>init</code> field in the hash, and generate a pseudo-random tape
+      with the following expression:
+
+      <pre>
+const n = Math.sin(10000 * params.seed++);
+const rng = n - Math.floor(n);
+return Math.round(rng);
+      </pre>
+
+      Interesting, the end behavior of all 4-state Turing machines is known via the
+      <a href="https://en.wikipedia.org/wiki/Busy_beaver">Busy beaver</a> problem.
+
+      That is,
     `;
   }
 
