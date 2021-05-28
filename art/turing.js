@@ -139,6 +139,8 @@ class Turing extends Art {
   }
 
   drawTape(ctx, tape, bitSize, y) {
+    // TODO: We'll need start and end to look at the canvas dimensions
+    // e.g. /turing/800/1600/9en20.png
     const start = Math.floor(tape.length / 4);
     const end = Math.floor((3 / 4) * tape.length);
     for (let i = start; i < end; i++) {

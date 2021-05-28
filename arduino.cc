@@ -19,7 +19,7 @@ void setup()
     display.print(F("Loading art"));
     display.display();
 
-    WiFi.begin("www.example.com", "wifisucks");
+    WiFi.begin("[your ssid here]", "[your password here]");
     while (WiFi.status() != WL_CONNECTED)
     {
         delay(100);
