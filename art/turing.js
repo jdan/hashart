@@ -115,11 +115,18 @@ class Turing extends Art {
       (For artistic purposes, the "halt" state H never appears).
 
       With each transition, we draw the one-dimensional tape on the canvas, and move down
-      a line.
+      a line. The result is a two-dimensional drawing that grows off the sides of the screen, empties
+      out completely, or draws something interesting.
 
       Turing machines are named after <a href="https://en.wikipedia.org/wiki/Alan_Turing">Alan Turing</a>,
       who developed them while researching the
-      <a href="https://en.wikipedia.org/wiki/Entscheidungsproblem">Entscheidungsproblem</a>.
+      <a href="https://en.wikipedia.org/wiki/Entscheidungsproblem">Entscheidungsproblem</a>. In order to
+      construct a <em>universal</em> Turing Machine (one which can compute anything), we need more states
+      and symbols*.
+
+      [<a href="https://en.wikipedia.org/wiki/Universal_Turing_machine#cite_note-7">*<a>]
+      Universal machines with the following amounts of (state, symbol) have been found - (15, 2),
+      (9, 3), (6, 4), (5, 5), (4, 6), (3, 9), and (2, 18)
     `;
   }
 
