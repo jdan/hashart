@@ -13,6 +13,7 @@ class Turing extends Art {
       α2: 3,
       β2: 3,
       γ2: 3,
+      input: 5,
     });
     this.filename = "turing.js";
     this.created = "28 May 2021";
@@ -72,10 +73,10 @@ class Turing extends Art {
       .join("");
 
     return `
-      <table cellpadding="3" border="1">
+      <table cellpadding="5" border="1">
         <thead>
           <tr>
-            <th rowspan="2"></th>
+            <th rowspan="2">Symbol</th>
             <th colspan="3">State α</th>
             <th colspan="3">State β</th>
             <th colspan="3">State γ</th>
@@ -99,11 +100,26 @@ class Turing extends Art {
 
   getDescription(params) {
     return `
-      From the hash we construct a 4-state
+      From the hash we construct a 3-symbol, 3-state
       <a href="https://en.wikipedia.org/wiki/Turing_machine">Turing machine</a>
       with the following transition table:
 
-      ${this.transitionTableHtml(params)}
+      <br>
+      <center>${this.transitionTableHtml(params)}</center>
+      <br>
+
+      We begin at state <strong>α</strong> on a tape seeded with <code>input</code>,
+      and use the lookup table to determine which symbol to write (a white square,
+      gray square, or black square),
+      which direction to move the cursor (left or right), and which state to become.
+      (For artistic purposes, the "halt" state H never appears).
+
+      With each transition, we draw the one-dimensional tape on the canvas, and move down
+      a line.
+
+      Turing machines are named after <a href="https://en.wikipedia.org/wiki/Alan_Turing">Alan Turing</a>,
+      who developed them while researching the
+      <a href="https://en.wikipedia.org/wiki/Entscheidungsproblem">Entscheidungsproblem</a>.
     `;
   }
 
@@ -130,17 +146,36 @@ class Turing extends Art {
     }
   }
 
+  bufferToTernary(buffer) {
+    let base10 = buffer.reduce((acc, d) => acc * 256 + d, 1);
+    return base10
+      .toString(3)
+      .split("")
+      .map((d) => parseInt(d));
+  }
+
   draw(ctx, params) {
     const w = ctx.canvas.width;
     const h = ctx.canvas.height;
 
+    // 12px bits at 1200px looks decent
     const bitSize = _(12, w);
+
+    // Initialize a tape large enough to handle all possible movements
     let tape = Array.from({
       length: 2 * Math.floor(Math.max(w, h) / bitSize) + 2,
     }).map((_) => 0);
+
     let cursorPosition = Math.floor(tape.length / 2);
     let state = "α";
 
+    // Place `input` on the tape
+    const input = this.bufferToTernary(params.inputBuffer);
+    for (let i = 0; i < input.length; i++) {
+      tape[cursorPosition - Math.floor(input.length / 2) + i] = input[i];
+    }
+
+    // Generate the transition table
     const table = this.transitionTable(params);
 
     for (let i = 0; i < Math.floor(h / bitSize) + 1; i++) {
