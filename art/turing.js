@@ -120,9 +120,10 @@ class Turing extends Art {
 
       Turing machines are named after <a href="https://en.wikipedia.org/wiki/Alan_Turing">Alan Turing</a>,
       who developed them while researching the
-      <a href="https://en.wikipedia.org/wiki/Entscheidungsproblem">Entscheidungsproblem</a>. In order to
-      construct a <em>universal</em> Turing Machine (one which can compute anything), we need more states
-      and symbols*.
+      <a href="https://en.wikipedia.org/wiki/Entscheidungsproblem">Entscheidungsproblem</a>. These machines
+      form the basis of "computation" - following a series of steps on some input to produce some output.
+      In order to construct a <em>universal</em> Turing Machine (one which can compute anything), we
+      need more states and symbols*.
 
       [<a href="https://en.wikipedia.org/wiki/Universal_Turing_machine#cite_note-7">*<a>]
       Universal machines with the following amounts of (state, symbol) have been found - (15, 2),
@@ -138,18 +139,33 @@ class Turing extends Art {
     return [move ? cursorPosition + 1 : cursorPosition - 1, nextState];
   }
 
-  drawTape(ctx, tape, bitSize, y) {
+  drawTape(ctx, tape, cursorPosition, bitSize, y) {
     const widthInBits = Math.floor(ctx.canvas.width / bitSize);
     const start = Math.floor(tape.length / 2 - widthInBits / 2);
     const end = Math.floor(tape.length / 2 + widthInBits / 2);
 
     for (let i = start; i < end; i++) {
+      const x = (i - start) * bitSize;
+      if (i === cursorPosition) {
+        console.log("drawing!");
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = "rgb(255, 255, 255)";
+        ctx.fillStyle = "rgb(0, 0, 0)";
+        ctx.beginPath();
+        ctx.moveTo(x + bitSize / 2, y);
+        ctx.lineTo(x, y - bitSize / 2);
+        ctx.lineTo(x + bitSize, y - bitSize / 2);
+        ctx.lineTo(x + bitSize / 2, y);
+        ctx.stroke();
+        ctx.fill();
+      }
+
       if (tape[i]) {
         const shade = (tape[i] - 1) * 128;
         ctx.fillStyle = `rgb(${shade}, ${shade}, ${shade})`;
 
         ctx.beginPath();
-        ctx.rect((i - start) * bitSize, y, bitSize, bitSize);
+        ctx.rect(x, y, bitSize, bitSize);
         ctx.fill();
       }
     }
@@ -195,7 +211,7 @@ class Turing extends Art {
         state
       );
 
-      this.drawTape(ctx, tape, bitSize, i * bitSize);
+      this.drawTape(ctx, tape, cursorPosition, bitSize, i * bitSize);
     }
   }
 }
