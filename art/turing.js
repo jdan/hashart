@@ -147,7 +147,6 @@ class Turing extends Art {
     for (let i = start; i < end; i++) {
       const x = (i - start) * bitSize;
       if (i === cursorPosition) {
-        console.log("drawing!");
         ctx.lineWidth = _(3, ctx.canvas.width);
         ctx.strokeStyle = "rgb(255, 255, 255)";
         ctx.fillStyle = "rgb(0, 0, 0)";
