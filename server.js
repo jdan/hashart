@@ -11,6 +11,11 @@ const app = express();
 
 app.use(express.json());
 
+app.use((req, res, next) => {
+  console.log(`${new Date()} ${req.ip} ${req.path}`);
+  next();
+});
+
 app.get("/", (req, res) => {
   res.send(`
     Provide a piece, width, height, and seed
