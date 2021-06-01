@@ -8,6 +8,7 @@ const { Walk } = require("./walk.js");
 const { Fraction } = require("./fraction.js");
 const { Semicircle } = require("./semicircle.js");
 const { Turing } = require("./turing.js");
+const { Divisions } = require("./divisions.js");
 
 module.exports = {
   circles: Circle,
@@ -20,4 +21,5 @@ module.exports = {
   fraction: Fraction,
   semicircle: Semicircle,
   turing: Turing,
+  divisions: Divisions,
 };
