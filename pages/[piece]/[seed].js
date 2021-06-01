@@ -58,7 +58,9 @@ function Art({ piece, seed, hashString }) {
         <meta property="og:description" content={`seed: ${seed}`} />
         <meta
           property="og:image"
-          content={`https://hashpng.jordanscales.com/${piece}/1200/630/${seed}.png`}
+          content={`https://hashpng.jordanscales.com/${piece}/1200/630/${encodeURIComponent(
+            seed
+          )}.png`}
         />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:creator" content="@jdan" />
