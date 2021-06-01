@@ -45,17 +45,16 @@ class Stocks extends Art {
     const name = Array.from(nameBuffer)
       .map((b) => String.fromCharCode((b % 26) + 65))
       .join("");
-    ctx.font = `${_(80, s)}px monospace`;
+    ctx.font = `bold ${_(80, s)}px monospace`;
     ctx.fillStyle = "rgb(0, 0, 0)";
     ctx.fillText("$" + name, _(60, w), h - _(80, h));
 
     // Graph
+    ctx.lineWidth = _(3, w);
     const leftPadding = _(236, w);
     const topPadding = _(140, h);
     const bottomPadding = _(400, h);
     let barWidth = _(20, w);
-    // Make barWidth an odd number
-    barWidth = barWidth % 2 === 0 ? barWidth + 1 : barWidth;
     const halfBarWidth = Math.floor(barWidth / 2) + 1;
 
     const barDistance = _(40, w);
@@ -109,7 +108,7 @@ class Stocks extends Art {
 
     // Labels
     const labelPadding = _(64, w);
-    ctx.font = `${_(36, s)}px monospace`;
+    ctx.font = `bold ${_(36, s)}px monospace`;
     ctx.textAlign = "right";
     ctx.fillText(
       `${movesBuffer.byteLength}d high: ${max.toFixed(2)}`,
@@ -123,7 +122,7 @@ class Stocks extends Art {
     );
 
     // Dates
-    ctx.font = `${_(30, s)}px monospace`;
+    ctx.font = `bold ${_(30, s)}px monospace`;
     ctx.textAlign = "left";
 
     function dateFromDay(year, day) {
