@@ -7,7 +7,7 @@ class Divisions extends Art {
       divisions: 16,
     });
     this.created = "01 Jun 2021";
-    this.filename = "divisons.js";
+    this.filename = "divisions.js";
   }
 
   getDescription({ divisionsBuffer }) {
