@@ -106,7 +106,7 @@ function Art({ piece, seed, hashString }) {
         ref={canvasEl}
         className={styles.canvas}
         width="1320"
-        height="1320"
+        height="990"
       />
 
       <aside>
