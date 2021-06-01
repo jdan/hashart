@@ -2,6 +2,7 @@ const express = require("express");
 const crypto = require("crypto");
 const { createCanvas } = require("canvas");
 const ejs = require("ejs");
+const fs = require("fs");
 const jsnes = require("jsnes");
 const pieces = require("./art/pieces.js");
 const generateState = require("./scripts/generate-state.js");
@@ -53,7 +54,7 @@ app.get("/", (req, res) => {
 
     Adjust the pieces that appear in the random rotation
     <ul>
-      <li><a href="/admin">/admin</a> (requires <code>ADMIN_PASSWORD</code> environment variable)</li>
+      <li><a href="/admin">/admin</a> (requires <code>db.json</code> and <code>ADMIN_PASSWORD</code> environment variable)</li>
     </ul>
   `);
 });
@@ -113,7 +114,24 @@ function sendArt(res, { piece, width, height, seed }) {
   });
 }
 
-let enabledPieces = new Set(Object.keys(pieces));
+function defaultPieces() {
+  return Object.keys(pieces).reduce(
+    (acc, key) => ({ ...acc, [key]: true }),
+    {}
+  );
+}
+
+function getEnabledPieces() {
+  if (!fs.existsSync("db.json")) {
+    return defaultPieces();
+  } else {
+    return JSON.parse(fs.readFileSync("db.json"));
+  }
+}
+
+function setEnabledPieces(pieces) {
+  fs.writeFileSync("db.json", JSON.stringify(pieces, null, 2));
+}
 
 app.get("/admin", (req, res) => {
   if (!process.env.ADMIN_PASSWORD) {
@@ -124,7 +142,7 @@ app.get("/admin", (req, res) => {
       "admin.ejs",
       {
         pieces: Object.keys(pieces),
-        enabledPieces,
+        enabledPieces: getEnabledPieces(),
       },
       (err, str) => {
         if (err) {
@@ -146,19 +164,25 @@ app.post("/admin", (req, res) => {
     res.statusCode = 404;
     res.send("Not found");
   } else {
+    let enabledPieces = getEnabledPieces();
+
     Object.keys(req.body).forEach((key) => {
       if (req.body[key]) {
-        enabledPieces.add(key);
+        enabledPieces[key] = true;
       } else {
-        enabledPieces.delete(key);
+        enabledPieces[key] = false;
       }
     });
 
-    if (enabledPieces.size === 0) {
+    const allFalse = !Object.keys(enabledPieces).some(
+      (key) => enabledPieces[key]
+    );
+
+    if (allFalse) {
       res.statusCode = 404;
       res.send("Not found");
-      enabledPieces = new Set(Object.keys(pieces));
     } else {
+      setEnabledPieces(enabledPieces);
       res.send("Ok");
     }
   }
@@ -167,10 +191,11 @@ app.post("/admin", (req, res) => {
 app.get("/random/:width/:height/random.png", (req, res) => {
   const { width, height } = req.params;
 
+  const enabledPieces = getEnabledPieces();
+  const pieces = Object.keys(enabledPieces).filter((key) => enabledPieces[key]);
+
   const pieceKeys =
-    state == null
-      ? Array.from(enabledPieces).filter((name) => name !== "mario")
-      : Array.from(enabledPieces);
+    state == null ? pieces.filter((name) => name !== "mario") : pieces;
   const piece = pieceKeys[Math.floor(Math.random() * pieceKeys.length)];
   const seed = Math.random() + "";
 

@@ -7,7 +7,6 @@
   <h1>Enabled pieces</h1>
 
   <form id="admin-form" method="POST" action="/admin">
-
     <% pieces.forEach((piece) => { %>
       <div class="field">
         <label>
@@ -15,7 +14,7 @@
             type="checkbox"
             class="piece-input"
             name="<%= piece %>"
-            <%= enabledPieces.has(piece) ? "checked" : "" %>
+            <%= enabledPieces[piece] ? "checked" : "" %>
           />
           <%= piece %>
         </label>
