@@ -54,7 +54,7 @@ app.get("/", (req, res) => {
 
     Adjust the pieces that appear in the random rotation
     <ul>
-      <li><a href="/admin">/admin</a> (requires <code>db.json</code> and <code>ADMIN_PASSWORD</code> environment variable)</li>
+      <li><a href="/admin">/admin</a> (requires <code>ADMIN_PASSWORD</code> environment variable)</li>
     </ul>
   `);
 });
