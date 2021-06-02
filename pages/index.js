@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Image from "next/image";
 import Link from "next/link";
 import pieces from "../art/pieces.js";
 
@@ -62,6 +63,21 @@ export default function Index() {
             </li>
           ))}
       </ul>
+
+      <p>
+        This art was created for{" "}
+        <Link href="https://github.com/jdan/hashart#rendering-hashart-on-screens">
+          <a>small e-ink displays</a>
+        </Link>
+        , such as my setup below.
+      </p>
+
+      <Image
+        src="/flat-eric.png"
+        alt="A photo of two stuffed animals next to a wooden frame with a digital screen in the middle of it. The screen contains a piece of art consisting of semicircles stacked on top of each other tightly, almost resembling a Slinky, scattered around the canvas"
+        width="660"
+        height="495"
+      />
     </main>
   );
 }
