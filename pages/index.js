@@ -48,7 +48,7 @@ export default function Index() {
       <p>Browse the collection:</p>
       <ul>
         {Object.keys(pieces)
-          .filter((k) => k !== "mario")
+          .filter((name) => !new pieces[name]().hidden)
           .map((name) => (
             <li key={name}>
               {new pieces[name]().created ? (

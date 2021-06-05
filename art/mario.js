@@ -7,6 +7,7 @@ class Mario extends Art {
     super({
       inputs: 32,
     });
+    this.hidden = true;
     this.filename = "mario.js";
     this.created = "18 Apr 2021";
   }

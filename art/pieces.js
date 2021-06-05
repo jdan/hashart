@@ -9,6 +9,7 @@ const { Fraction } = require("./fraction.js");
 const { Semicircle } = require("./semicircle.js");
 const { Turing } = require("./turing.js");
 const { Divisions } = require("./divisions.js");
+const { QuasiFlake } = require("./quasiflake.js");
 
 module.exports = {
   circles: Circle,
@@ -22,4 +23,5 @@ module.exports = {
   semicircle: Semicircle,
   turing: Turing,
   divisions: Divisions,
+  quasiflake: QuasiFlake,
 };
