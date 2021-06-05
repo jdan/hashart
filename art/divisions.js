@@ -4,21 +4,19 @@ const { _ } = require("./util.js");
 class Divisions extends Art {
   constructor() {
     super({
-      divisions: 16,
+      divisions: 32,
     });
-    this.created = "01 Jun 2021";
+    this.created = "05 Jun 2021";
     this.filename = "divisions.js";
   }
 
   getDescription({ divisionsBuffer }) {
     return `
-      For each of the ${divisionsBuffer.length} bytes in <code>divisions</code>,
-      we cut the canvas into two pieces. The distance from the edge that we do this
-      is determined by the square of the current byte. We then rotate and repeat this
-      process on the remaining canvas.
+      Begin with a single rectangle covering the entire canvas.
 
-      If each of these distances were 1/φ (the golden ratio), we would end up with the
-      <a href="https://en.wikipedia.org/wiki/Golden_spiral">Golden spiral</a>.
+      For each of the ${divisionsBuffer.length} bytes in <code>divisions</code>,
+      determine which rectangle to split (<code>byte % rectangles.length</code>) and
+      divide that rectangle in half either horizontally or vertically (<code>byte % 2</code>).
     `;
   }
 
@@ -28,33 +26,43 @@ class Divisions extends Art {
 
     ctx.lineWidth = _(3, w);
 
-    let minX = 0;
-    let minY = 0;
-    let maxX = w;
-    let maxY = h;
+    let regions = [{ x: 0, y: 0, w, h }];
 
-    divisionsBuffer.forEach((value, idx) => {
-      const cutPct = Math.pow(value / 256, 2);
+    for (let i = 0; i < divisionsBuffer.length; i += 1) {
+      const idx = divisionsBuffer[i] % regions.length;
+      const direction = divisionsBuffer[i] % 2;
+      const region = regions[idx];
 
-      ctx.beginPath();
-      if (idx % 4 === 0) {
-        minX += (maxX - minX) * cutPct;
-        ctx.moveTo(minX, minY);
-        ctx.lineTo(minX, maxY);
-      } else if (idx % 4 === 1) {
-        minY += (maxY - minY) * cutPct;
-        ctx.moveTo(minX, minY);
-        ctx.lineTo(maxX, minY);
-      } else if (idx % 4 === 2) {
-        maxX -= (maxX - minX) * cutPct;
-        ctx.moveTo(maxX, minY);
-        ctx.lineTo(maxX, maxY);
-      } else if (idx % 4 === 3) {
-        maxY -= (maxY - minY) * cutPct;
-        ctx.moveTo(minX, maxY);
-        ctx.lineTo(maxX, maxY);
+      if (direction === 0) {
+        regions.splice(
+          idx,
+          1,
+          { x: region.x, y: region.y, w: region.w, h: region.h / 2 },
+          {
+            x: region.x,
+            y: region.y + region.h / 2,
+            w: region.w,
+            h: region.h / 2,
+          }
+        );
+      } else {
+        regions.splice(
+          idx,
+          1,
+          { x: region.x, y: region.y, w: region.w / 2, h: region.h },
+          {
+            x: region.x + region.w / 2,
+            y: region.y,
+            w: region.w / 2,
+            h: region.h,
+          }
+        );
       }
+    }
 
+    regions.forEach(({ x, y, w, h }) => {
+      ctx.beginPath();
+      ctx.rect(x, y, w, h);
       ctx.stroke();
     });
   }
