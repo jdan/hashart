@@ -11,7 +11,6 @@ class Chess extends Art {
     super({
       moves: 16,
     });
-    this.debounce = true;
     this.filename = "chess.js";
     this.created = "24 Apr 2021";
   }
