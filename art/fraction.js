@@ -1,6 +1,16 @@
 const { Art } = require("./_base.js");
 const { _ } = require("./util.js");
 
+function bigIntOfBuffer(buffer) {
+  let res = 0n;
+  buffer.forEach((item, idx) => {
+    res *= 256n;
+    res += BigInt(item);
+  });
+  return res;
+}
+exports.bigIntOfBuffer = bigIntOfBuffer;
+
 class Fraction extends Art {
   constructor() {
     super({
@@ -23,15 +33,6 @@ class Fraction extends Art {
       <a href="https://en.wikipedia.org/wiki/Greedy_algorithm_for_Egyptian_fractions">greedy one</a>.
       The numbers grow fast very quickly.
     `;
-  }
-
-  bigIntOfBuffer(buffer) {
-    let res = 0n;
-    buffer.forEach((item, idx) => {
-      res *= 256n;
-      res += BigInt(item);
-    });
-    return res;
   }
 
   drawFraction(ctx, fontSize, lineHeight, numer, denom, x, y, maxWidth) {
@@ -77,8 +78,8 @@ class Fraction extends Art {
   }
 
   draw(ctx, { aBuffer, bBuffer }) {
-    const a = this.bigIntOfBuffer(aBuffer);
-    const b = this.bigIntOfBuffer(bBuffer);
+    const a = bigIntOfBuffer(aBuffer);
+    const b = bigIntOfBuffer(bBuffer);
 
     let numer = a < b ? a : b;
     let denom = a < b ? b : a;
