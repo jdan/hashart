@@ -7,6 +7,21 @@ if (ChessGame.Chess) {
   ChessGame = ChessGame.Chess;
 }
 
+function getGame(movesBuffer) {
+  const game = new ChessGame();
+
+  for (let i = 0; i < movesBuffer.byteLength; i++) {
+    let moves = game.moves();
+    game.move(moves[Math.floor((movesBuffer[i] / 256) * moves.length)]);
+  }
+
+  return game;
+}
+
+function getPgn(movesBuffer) {
+  return getGame(movesBuffer).pgn({ newline_char: "<br/>" });
+}
+
 class Chess extends Art {
   constructor() {
     super({
@@ -29,23 +44,8 @@ class Chess extends Art {
       If you'd like to analyze or continue the game above, you can do so by heading to
       <a href="https://lichess.org/paste">lichess.org/paste</a> and entering the following PGN:
 
-      <strong>${this.getPgn(movesBuffer)}</strong>
+      <strong>${getPgn(movesBuffer)}</strong>
     `;
-  }
-
-  getPgn(movesBuffer) {
-    return this.getGame(movesBuffer).pgn({ newline_char: "<br/>" });
-  }
-
-  getGame(movesBuffer) {
-    const game = new ChessGame();
-
-    for (let i = 0; i < movesBuffer.byteLength; i++) {
-      let moves = game.moves();
-      game.move(moves[Math.floor((movesBuffer[i] / 256) * moves.length)]);
-    }
-
-    return game;
   }
 
   squareToDrawFn(square) {
@@ -75,7 +75,7 @@ class Chess extends Art {
     const w = ctx.canvas.width;
     const h = ctx.canvas.height;
 
-    const game = this.getGame(movesBuffer);
+    const game = getGame(movesBuffer);
 
     const squareSize = _(140, Math.min(w, h));
     ctx.font = `${squareSize}px monospace`;
@@ -116,3 +116,4 @@ class Chess extends Art {
 }
 
 exports.Chess = Chess;
+exports.getPgn = getPgn;
