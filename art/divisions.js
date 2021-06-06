@@ -24,7 +24,7 @@ class Divisions extends Art {
     const w = ctx.canvas.width;
     const h = ctx.canvas.height;
 
-    ctx.lineWidth = _(3, w);
+    ctx.lineWidth = _(5, w);
 
     let regions = [{ x: 0, y: 0, w, h }];
 
