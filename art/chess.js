@@ -1,5 +1,6 @@
 const { Art } = require("./_base.js");
 const { _ } = require("./util.js");
+const { chessPieces } = require("./chess-pieces");
 
 let ChessGame = require("chess.js");
 if (ChessGame.Chess) {
@@ -47,6 +48,16 @@ class Chess extends Art {
     return game;
   }
 
+  squareToDrawFn(square) {
+    if (!square) {
+      return () => {};
+    }
+
+    const filename = `${square.color}${square.type.toUpperCase()}.svg`;
+    return chessPieces[filename].draw;
+  }
+
+  // Unused
   squareToAscii(square) {
     return square
       ? {
@@ -80,17 +91,25 @@ class Chess extends Art {
         const y = topPadding + r * squareSize;
 
         if (r % 2 !== c % 2) {
+          ctx.save();
           ctx.fillStyle = "rgb(180, 180, 180)";
           ctx.fillRect(x, y, squareSize, squareSize);
+          ctx.restore();
         }
 
-        ctx.fillStyle = "rgb(0, 0, 0)";
-        ctx.textAlign = "center";
-        ctx.fillText(
-          this.squareToAscii(board[r][c]),
-          x + squareSize / 2,
-          y + squareSize - _(18, Math.min(w, h))
+        const SVG_PIECE_SIZE = 45;
+        const drawPiece = this.squareToDrawFn(board[r][c]);
+        ctx.save();
+        ctx.transform(
+          squareSize / SVG_PIECE_SIZE,
+          0,
+          0,
+          squareSize / SVG_PIECE_SIZE,
+          x,
+          y
         );
+        drawPiece(ctx);
+        ctx.restore();
       }
     }
   }
