@@ -33,21 +33,32 @@ void setup()
 
 void loop()
 {
+    // janky reconnect logic
     if (WiFi.status() != WL_CONNECTED)
     {
         WiFi.reconnect();
         delay(5000);
+        int cnt = 0;
+
+        while (WiFi.status() != WL_CONNECTED)
+        {
+            delay(1000);
+            cnt++;
+
+            if (cnt == 10)
+            {
+                ESP.restart();
+            }
+        }
     }
 
     display.clearDisplay();
-
     // https://github.com/jdan/hashart#a-small-screenshot-service
     char *url = "https://FILLMEIN/random/800/600/random.png";
-
     display.drawImage(url, 0, 0, true, 0);
     display.display();
 
-    // Sleep for 60 seconds
-    esp_sleep_enable_timer_wakeup(1000L * 60000L);
+    // Sleep for 5 minutes
+    esp_sleep_enable_timer_wakeup(1000L * 1000L * 60L * 5L);
     (void)esp_light_sleep_start();
 }
