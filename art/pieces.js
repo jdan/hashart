@@ -10,6 +10,8 @@ const { Semicircle } = require("./semicircle.js");
 const { Turing } = require("./turing.js");
 const { Divisions } = require("./divisions.js");
 const { QuasiFlake } = require("./quasiflake.js");
+const { Combinators } = require("./combinators.js");
+const { Noise } = require("./noise.js");
 
 module.exports = {
   circles: Circle,
@@ -24,4 +26,6 @@ module.exports = {
   turing: Turing,
   divisions: Divisions,
   quasiflake: QuasiFlake,
+  combinators: Combinators,
+  noise: Noise,
 };
