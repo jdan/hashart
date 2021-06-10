@@ -1,6 +1,7 @@
 const express = require("express");
 const crypto = require("crypto");
 const { createCanvas } = require("canvas");
+const Dither = require("canvas-dither");
 const ejs = require("ejs");
 const fs = require("fs");
 const jsnes = require("jsnes");
@@ -95,6 +96,11 @@ function sendArt(res, { piece, width, height, seed }) {
   const hash = new Uint8Array(buffer);
 
   art.render(ctx, hash, props);
+
+  const image = ctx.getImageData(0, 0, ctx.canvas.width, ctx.canvas.height);
+  const dithered = Dither.atkinson(image);
+  ctx.putImageData(dithered, 0, 0);
+
   res.set("Content-Type", "image/png");
 
   /**
