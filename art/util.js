@@ -4,3 +4,12 @@ exports._ = (measurement, dimension) =>
   // Useful when we know a width of "200" looks good at 1320px and
   // want to scale it.
   Math.round((measurement * dimension) / 1320);
+
+exports.bigIntOfBuffer = (buffer) => {
+  let res = 0n;
+  buffer.forEach((item, idx) => {
+    res *= 256n;
+    res += BigInt(item);
+  });
+  return res;
+};

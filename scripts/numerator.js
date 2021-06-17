@@ -10,7 +10,7 @@
  * https://hash.jordanscales.com/fraction/jdan136845 will have a numerator of "12092"
  */
 const crypto = require("crypto");
-const { bigIntOfBuffer } = require("../art/fraction.js");
+const { bigIntOfBuffer } = require("../art/util.js");
 
 function numeratorOfSeed(str) {
   const shaSum = crypto.createHash("sha256");

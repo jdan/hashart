@@ -1,15 +1,5 @@
 const { Art } = require("./_base.js");
-const { _ } = require("./util.js");
-
-function bigIntOfBuffer(buffer) {
-  let res = 0n;
-  buffer.forEach((item, idx) => {
-    res *= 256n;
-    res += BigInt(item);
-  });
-  return res;
-}
-exports.bigIntOfBuffer = bigIntOfBuffer;
+const { _, bigIntOfBuffer } = require("./util.js");
 
 class Fraction extends Art {
   constructor() {
