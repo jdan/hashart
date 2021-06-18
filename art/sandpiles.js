@@ -22,8 +22,8 @@ class Sandpiles extends Art {
       For each of the ${Object.keys(this.template).length} piles, read ${
       this.template.pile1
     } bytes as a triple <code>(x, y, amount)</code>. At position (x, y), place
-    <code>amount</code> grains. Then, for all cells in the grid, if there are more than
-    <strong>4</strong> grains, spill one grain in each of the four cardinal directions. Repeat
+    <code>amount</code> grains. Then, for all cells in the grid, if there are
+    <strong>4 or more</strong> grains, spill one grain in each of the four cardinal directions. Repeat
     this process until no grains fall.
 
     This is a cellular automaton known as the <a href="https://en.wikipedia.org/wiki/Abelian_sandpile_model">Abelian
