@@ -30,7 +30,7 @@ class Element extends Art {
 
       From the atomic number, draw electrons according to the
       <a href="https://en.wikipedia.org/wiki/Bohr_model">Bohr model</a>, where each ring can hold <code>2n²</code>
-      electrons.
+      electrons. Rotate each ring according to the nth byte in the <code>rotations</code> buffer.
     `;
   }
 
