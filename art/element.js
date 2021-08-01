@@ -24,6 +24,10 @@ class Element extends Art {
       (things get interesting when one bigram can go in many directions such as
       <a href="https://github.com/jdan/hashart/blob/main/art/element-markov.js#L172">"li"</a>)
       and traverse the graph by picking the next node in the graph using the <code>traverse</code> buffer.
+      Continue until END to get the name of your element, which may be the name of an existing element.
+
+      This markov chain was generated with <a href="https://github.com/jdan/markov.rb#how-it-works">markov.rb</a>
+      and converted to JSON.
 
       The atomic number of our new element is computed by multiplying the <code>protons</code> vector by 300.
       The atomic weight is computed using <code>atomicNumber * (1.5 + weight)</code>.
