@@ -13,6 +13,7 @@ const { QuasiFlake } = require("./quasiflake.js");
 const { Combinators } = require("./combinators.js");
 const { Noise } = require("./noise.js");
 const { Sandpiles } = require("./sandpiles.js");
+const { Element } = require("./element.js");
 
 module.exports = {
   circles: Circle,
@@ -30,4 +31,5 @@ module.exports = {
   combinators: Combinators,
   noise: Noise,
   sandpiles: Sandpiles,
+  element: Element,
 };
