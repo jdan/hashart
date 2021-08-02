@@ -49,6 +49,7 @@ export default function Index() {
       <ul>
         {Object.keys(pieces)
           .filter((name) => !new pieces[name]().hidden)
+          .reverse()
           .map((name) => (
             <li key={name}>
               {new pieces[name]().created ? (
