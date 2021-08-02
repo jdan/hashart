@@ -2,6 +2,31 @@ const { Art } = require("./_base.js");
 const { _ } = require("./util.js");
 const { chain, elements } = require("./element-markov.js");
 
+function getName(buffer) {
+  let currentNode = "start";
+  let result = "";
+
+  for (let i = 0; i < buffer.length; i++) {
+    let options = chain[currentNode];
+    let nonterminatingOptions = options.filter((o) => o !== "end");
+
+    let next = options[Math.floor((buffer[i] / 256) * options.length)];
+
+    if (next === "end") {
+      break;
+    }
+
+    currentNode = next;
+    if (result === "") {
+      result = currentNode;
+    } else {
+      result += currentNode[currentNode.length - 1];
+    }
+  }
+
+  return result[0].toUpperCase() + result.slice(1);
+}
+
 class Element extends Art {
   constructor() {
     super({
@@ -38,31 +63,6 @@ class Element extends Art {
     `;
   }
 
-  getName(buffer) {
-    let currentNode = "start";
-    let result = "";
-
-    for (let i = 0; i < buffer.length; i++) {
-      let options = chain[currentNode];
-      let nonterminatingOptions = options.filter((o) => o !== "end");
-
-      let next = options[Math.floor((buffer[i] / 256) * options.length)];
-
-      if (next === "end") {
-        break;
-      }
-
-      currentNode = next;
-      if (result === "") {
-        result = currentNode;
-      } else {
-        result += currentNode[currentNode.length - 1];
-      }
-    }
-
-    return result[0].toUpperCase() + result.slice(1);
-  }
-
   getAtomicNumber(protons) {
     // return Math.floor(119 + protons * 100);
     return Math.floor(protons * 300);
@@ -72,7 +72,7 @@ class Element extends Art {
     const w = ctx.canvas.width;
     const h = ctx.canvas.height;
 
-    const name = this.getName(traverseBuffer);
+    const name = getName(traverseBuffer);
     const left = 100;
 
     let atomicNumber = this.getAtomicNumber(protons);
@@ -142,3 +142,4 @@ class Element extends Art {
 }
 
 exports.Element = Element;
+exports.getName = getName;
