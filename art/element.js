@@ -76,22 +76,22 @@ class Element extends Art {
     const left = 100;
 
     let atomicNumber = this.getAtomicNumber(protons);
-    ctx.font = `bold ${_(100, w)}px Arial`;
+    ctx.font = `bold ${_(130, h)}px Arial`;
     ctx.fillStyle = "rgb(0, 0, 0)";
-    ctx.fillText(atomicNumber, _(left, w), _(180, w));
+    ctx.fillText(atomicNumber, _(left, w), _(180, h));
 
-    ctx.font = `bold ${_(180, w)}px Arial`;
+    ctx.font = `bold ${_(240, h)}px Arial`;
     ctx.fillStyle = "rgb(0, 0, 0)";
-    ctx.fillText(name.slice(0, 2), _(left - 8, w), _(h - 280, w));
+    ctx.fillText(name.slice(0, 2), _(left - 8, w), h - _(280, h));
 
-    ctx.font = `bold ${_(60, w)}px Arial`;
+    ctx.font = `bold ${_(80, h)}px Arial`;
     ctx.fillStyle = "rgb(0, 0, 0)";
-    ctx.fillText(name, _(left, w), _(h - 190, w));
+    ctx.fillText(name, _(left, w), h - _(190, h));
 
     let atomicWeight = atomicNumber * (1.5 + weight);
-    ctx.font = `bold ${_(60, w)}px Arial`;
+    ctx.font = `bold ${_(80, h)}px Arial`;
     ctx.fillStyle = "rgb(0, 0, 0)";
-    ctx.fillText(atomicWeight.toFixed(2), _(left, w), _(h - 105, w));
+    ctx.fillText(atomicWeight.toFixed(2), _(left, w), h - _(105, h));
 
     const bohrCenterX = _(830, w);
     const bohrCenterY = h / 2;
