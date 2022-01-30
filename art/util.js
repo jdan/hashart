@@ -5,6 +5,9 @@ exports._ = (measurement, dimension) =>
   // want to scale it.
   Math.round((measurement * dimension) / 1320);
 
+exports.project = (val, valMin, valMax, desiredMin, desiredMax) =>
+  ((val - valMin) / (valMax - valMin)) * (desiredMax - desiredMin) + desiredMin;
+
 exports.bigIntOfBuffer = (buffer) => {
   let res = 0n;
   buffer.forEach((item, idx) => {

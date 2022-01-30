@@ -14,6 +14,7 @@ const { Combinators } = require("./combinators.js");
 const { Noise } = require("./noise.js");
 const { Sandpiles } = require("./sandpiles.js");
 const { Element } = require("./element.js");
+const { Skewer } = require("./skewer.js");
 
 module.exports = {
   circles: Circle,
@@ -32,4 +33,5 @@ module.exports = {
   noise: Noise,
   sandpiles: Sandpiles,
   element: Element,
+  skewer: Skewer,
 };
