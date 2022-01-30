@@ -1,7 +1,7 @@
 const { Art } = require("./_base.js");
 const { _, project } = require("./util.js");
 
-class Skewer extends Art {
+class Rings extends Art {
   constructor() {
     super({
       init: 2,
@@ -9,7 +9,7 @@ class Skewer extends Art {
       changes: 20,
     });
 
-    this.filename = "skewer.js";
+    this.filename = "rings.js";
     this.created = "30 Jan 2022";
   }
 
@@ -50,4 +50,4 @@ class Skewer extends Art {
   }
 }
 
-exports.Skewer = Skewer;
+exports.Rings = Rings;
