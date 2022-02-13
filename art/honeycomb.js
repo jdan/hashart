@@ -35,23 +35,83 @@ class HoneyComb extends Art {
     }
     ctx.stroke();
 
-    // Connectors
-    const [a, b] = [Math.floor(pattern / 6), pattern % 6];
-    ctx.beginPath();
-    ctx.moveTo(x, y);
-    ctx.lineTo(
-      x + ((sideLength * Math.sqrt(3)) / 2) * Math.cos((a * 2 * Math.PI) / 6),
-      y + ((sideLength * Math.sqrt(3)) / 2) * Math.sin((a * 2 * Math.PI) / 6)
-    );
-    ctx.stroke();
+    const [a, b] = [Math.floor((pattern / 256) * 6), pattern % 6];
 
-    ctx.beginPath();
-    ctx.moveTo(x, y);
-    ctx.lineTo(
-      x + ((sideLength * Math.sqrt(3)) / 2) * Math.cos((b * 2 * Math.PI) / 6),
-      y + ((sideLength * Math.sqrt(3)) / 2) * Math.sin((b * 2 * Math.PI) / 6)
-    );
-    ctx.stroke();
+    const gap = sideLength / 4;
+    const l = (sideLength * Math.sqrt(3)) / 2;
+
+    const aTheta = (a * 2 * Math.PI) / 6;
+    const bTheta = (b * 2 * Math.PI) / 6;
+
+    if (a === b) {
+      ctx.beginPath();
+      ctx.moveTo(
+        x + l * Math.cos(aTheta) - (gap / 2) * Math.cos(aTheta - Math.PI / 2),
+        y + l * Math.sin(aTheta) - (gap / 2) * Math.sin(aTheta - Math.PI / 2)
+      );
+      ctx.lineTo(
+        x + gap * Math.cos(aTheta) - (gap / 2) * Math.cos(aTheta - Math.PI / 2),
+        y + gap * Math.sin(aTheta) - (gap / 2) * Math.sin(aTheta - Math.PI / 2)
+      );
+
+      ctx.lineTo(
+        x + gap * Math.cos(aTheta) + (gap / 2) * Math.cos(aTheta - Math.PI / 2),
+        y + gap * Math.sin(aTheta) + (gap / 2) * Math.sin(aTheta - Math.PI / 2)
+      );
+      ctx.lineTo(
+        x + l * Math.cos(aTheta) + (gap / 2) * Math.cos(aTheta - Math.PI / 2),
+        y + l * Math.sin(aTheta) + (gap / 2) * Math.sin(aTheta - Math.PI / 2)
+      );
+
+      ctx.stroke();
+    } else {
+      // A
+      ctx.beginPath();
+      ctx.moveTo(
+        x + l * Math.cos(aTheta) - (gap / 2) * Math.cos(aTheta - Math.PI / 2),
+        y + l * Math.sin(aTheta) - (gap / 2) * Math.sin(aTheta - Math.PI / 2)
+      );
+      ctx.lineTo(
+        x + gap * Math.cos(aTheta) - (gap / 2) * Math.cos(aTheta - Math.PI / 2),
+        y + gap * Math.sin(aTheta) - (gap / 2) * Math.sin(aTheta - Math.PI / 2)
+      );
+
+      // todo - arc?
+
+      ctx.lineTo(
+        x + gap * Math.cos(bTheta) + (gap / 2) * Math.cos(bTheta - Math.PI / 2),
+        y + gap * Math.sin(bTheta) + (gap / 2) * Math.sin(bTheta - Math.PI / 2)
+      );
+      ctx.lineTo(
+        x + l * Math.cos(bTheta) + (gap / 2) * Math.cos(bTheta - Math.PI / 2),
+        y + l * Math.sin(bTheta) + (gap / 2) * Math.sin(bTheta - Math.PI / 2)
+      );
+      ctx.stroke();
+
+      // B
+
+      ctx.beginPath();
+      ctx.moveTo(
+        x + l * Math.cos(aTheta) + (gap / 2) * Math.cos(aTheta - Math.PI / 2),
+        y + l * Math.sin(aTheta) + (gap / 2) * Math.sin(aTheta - Math.PI / 2)
+      );
+      ctx.lineTo(
+        x + gap * Math.cos(aTheta) + (gap / 2) * Math.cos(aTheta - Math.PI / 2),
+        y + gap * Math.sin(aTheta) + (gap / 2) * Math.sin(aTheta - Math.PI / 2)
+      );
+
+      // todo - arc?
+
+      ctx.lineTo(
+        x + gap * Math.cos(bTheta) - (gap / 2) * Math.cos(bTheta - Math.PI / 2),
+        y + gap * Math.sin(bTheta) - (gap / 2) * Math.sin(bTheta - Math.PI / 2)
+      );
+      ctx.lineTo(
+        x + l * Math.cos(bTheta) - (gap / 2) * Math.cos(bTheta - Math.PI / 2),
+        y + l * Math.sin(bTheta) - (gap / 2) * Math.sin(bTheta - Math.PI / 2)
+      );
+      ctx.stroke();
+    }
   }
 
   draw(ctx, { patternsBuffer }) {
