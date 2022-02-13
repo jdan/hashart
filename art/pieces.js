@@ -15,6 +15,7 @@ const { Noise } = require("./noise.js");
 const { Sandpiles } = require("./sandpiles.js");
 const { Element } = require("./element.js");
 const { Rings } = require("./rings.js");
+const { HoneyComb } = require("./honeycomb.js");
 
 module.exports = {
   circles: Circle,
@@ -34,4 +35,5 @@ module.exports = {
   sandpiles: Sandpiles,
   element: Element,
   rings: Rings,
+  honeycomb: HoneyComb,
 };
