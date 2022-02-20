@@ -1,5 +1,5 @@
 const { Art } = require("./_base.js");
-const { _, project } = require("./util.js");
+const { _ } = require("./util.js");
 
 class HoneyComb extends Art {
   constructor() {

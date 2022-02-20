@@ -16,6 +16,7 @@ const { Sandpiles } = require("./sandpiles.js");
 const { Element } = require("./element.js");
 const { Rings } = require("./rings.js");
 const { HoneyComb } = require("./honeycomb.js");
+const { Knots } = require("./knots.js");
 
 module.exports = {
   circles: Circle,
@@ -36,4 +37,5 @@ module.exports = {
   element: Element,
   rings: Rings,
   honeycomb: HoneyComb,
+  knots: Knots,
 };
