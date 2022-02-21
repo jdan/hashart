@@ -125,7 +125,7 @@ class Turing extends Art {
       In order to construct a <em>universal</em> Turing Machine (one which can compute anything), we
       need more states and symbols*.
 
-      [<a href="https://en.wikipedia.org/wiki/Universal_Turing_machine#cite_note-7">*<a>]
+      [<a href="https://en.wikipedia.org/wiki/Universal_Turing_machine#cite_note-7">*</a>]
       Universal machines with the following amounts of (state, symbol) have been found - (15, 2),
       (9, 3), (6, 4), (5, 5), (4, 6), (3, 9), and (2, 18)
     `;
