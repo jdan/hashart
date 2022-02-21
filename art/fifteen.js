@@ -116,12 +116,14 @@ class Fifteen extends Art {
 
     // From each byte we get one of N/E/S/W, representing
     // the direction of the block we'll be moving
-    const moves = Array.from(movesBuffer).flatMap((byte) => [
-      byte >> 6,
-      (byte >> 4) % 4,
-      (byte >> 2) % 4,
-      byte % 4,
-    ]);
+    const moves = [].concat(
+      ...Array.from(movesBuffer).map((byte) => [
+        byte >> 6,
+        (byte >> 4) % 4,
+        (byte >> 2) % 4,
+        byte % 4,
+      ])
+    );
 
     moves.forEach((move) => {
       const { x, y } = this.getEmptyPosition(currentGrid);
