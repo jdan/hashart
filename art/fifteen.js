@@ -38,13 +38,13 @@ class Fifteen extends Art {
   }
 
   computeIdealLayout(w, h, grids) {
-    const idealNegativeSpace = (w * h) / 4;
-    let bestLayout = { negativeSpace: 0 };
+    const idealNegativeSpace = (w * h) / 2;
+    let bestLayout = { negativeSpace: Infinity };
 
-    for (let rows = 1; rows < grids.length; rows++) {
-      for (let padding = 16; padding < 100; padding += 3) {
-        for (let puzzleSize = 64; puzzleSize < 200; puzzleSize += 16) {
-          let columns = Math.ceil(grids.length / rows);
+    for (let columns = 1; columns < grids.length; columns++) {
+      for (let puzzleSize = 8; puzzleSize < 200; puzzleSize += 4) {
+        for (let padding = puzzleSize / 4; padding < puzzleSize; padding += 1) {
+          let rows = Math.ceil(grids.length / columns);
           let layoutWidth = columns * puzzleSize + (columns + 1) * padding;
           let layoutHeight = rows * puzzleSize + (rows + 1) * padding;
 
@@ -56,10 +56,8 @@ class Fifteen extends Art {
           const negativeSpace =
             // Size of the canvas
             w * h -
-            // Subtract the area the layout takes up
-            layoutWidth * layoutHeight +
-            // We took out too much! Add back the total area of the puzzles
-            puzzleSize * rows * columns;
+            // Subtract the area of the puzzles
+            puzzleSize * puzzleSize * columns * rows;
 
           if (
             Math.abs(idealNegativeSpace - negativeSpace) <
@@ -67,8 +65,8 @@ class Fifteen extends Art {
           ) {
             bestLayout = {
               negativeSpace,
-              rows,
               columns,
+              rows,
               layoutWidth,
               layoutHeight,
               padding,
@@ -153,7 +151,7 @@ class Fifteen extends Art {
     });
 
     const { rows, columns, layoutWidth, layoutHeight, padding, puzzleSize } =
-      this.computeIdealLayout(w, h, grids);
+      this.computeIdealLayout(w * 0.9, h * 0.9, grids);
 
     grids.forEach((grid, idx) => {
       const row = Math.floor(idx / columns);
@@ -162,11 +160,11 @@ class Fifteen extends Art {
       const x =
         Math.floor(w / 2 - layoutWidth / 2) +
         column * puzzleSize +
-        padding * (column + 1);
+        (column + 1) * padding;
       const y =
         Math.floor(h / 2 - layoutHeight / 2) +
         row * puzzleSize +
-        padding * (row + 1);
+        (row + 1) * padding;
 
       this.drawPuzzle(ctx, x, y, puzzleSize, grid);
     });
