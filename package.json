@@ -1,4 +1,6 @@
 {
+  "name": "hashart",
+  "version": "0.0.1",
   "scripts": {
     "dev": "next dev",
     "dev:server": "nodemon server.js",
