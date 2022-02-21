@@ -17,6 +17,7 @@ const { Element } = require("./element.js");
 const { Rings } = require("./rings.js");
 const { HoneyComb } = require("./honeycomb.js");
 const { Knots } = require("./knots.js");
+const { Fifteen } = require("./fifteen.js");
 
 module.exports = {
   circles: Circle,
@@ -38,4 +39,5 @@ module.exports = {
   rings: Rings,
   honeycomb: HoneyComb,
   knots: Knots,
+  fifteen: Fifteen,
 };
