@@ -105,7 +105,11 @@ class Automata extends Art {
       row[idx] = input[i];
     }
 
-    const lookup = Object.fromEntries(this.ruleToLookup(rule * 256));
+    const lookup = {};
+    this.ruleToLookup(rule * 256).forEach(([seq, val]) => {
+      lookup[seq] = val;
+    });
+
     for (let i = 0; i < Math.floor(h / bitSize) + 1; i++) {
       row = this.nextRow(row, lookup);
       this.drawRow(ctx, row, bitSize, i * bitSize);
