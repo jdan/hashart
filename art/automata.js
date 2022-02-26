@@ -4,7 +4,7 @@ const { _, project } = require("./util.js");
 class Automata extends Art {
   constructor() {
     super({
-      rule: 2,
+      rule: 1,
       seed: 4,
       size: 2,
     });
@@ -12,24 +12,45 @@ class Automata extends Art {
     this.created = "26 Feb 2022";
   }
 
-  getDescription(params) {
+  getDescription({ rule, seedBuffer }) {
     return `
-      TBD
+      Begin with an empty row of 0's and populate the center
+      with a bitstring taken from <code>seed</code>.
+
+      Build a <a href="https://en.wikipedia.org/wiki/Rule_110#Definition">table</a>
+      by converting <code>rule</code> to binary, and pairing each bit with a
+      number starting from 7 and decreasing to 0. For our above seed, rule ${
+        rule * 256
+      } will generate the following table:
+
+      <table cellpadding="5" border="1">
+        <tr>
+          <th>seq</th>
+          ${this.ruleToLookup(rule * 256)
+            .map(([seq, _]) => `<td>${seq}</td>`)
+            .join("\n")}
+        </tr>
+        <tr>
+          <th>val</th>
+          ${this.ruleToLookup(rule * 256)
+            .map(([_, val]) => `<td>${val}</td>`)
+            .join("\n")}
+        </tr>
+      </table>
+
+      For each bit in the row, generate a three-bit string using the bit to
+      its left, the bit itself, and the bit to its right. Look up this value
+      in the table above, and assign <code>val</code> as the new bit.
+
+      Finally draw the resulting row on the next line of the canvas.
     `;
   }
 
   ruleToLookup(rule) {
-    const bits = rule.toString(2).padStart(8, "0");
-    return {
-      111: bits[0],
-      110: bits[1],
-      101: bits[2],
-      100: bits[3],
-      "011": bits[4],
-      "010": bits[5],
-      "001": bits[6],
-      "000": bits[7],
-    };
+    const bits = Math.floor(rule).toString(2).padStart(8, "0");
+    return ["111", "110", "101", "100", "011", "010", "001", "000"].map(
+      (seq, idx) => [seq, bits[idx]]
+    );
   }
 
   nextRow(row, lookup) {
@@ -84,7 +105,7 @@ class Automata extends Art {
       row[idx] = input[i];
     }
 
-    const lookup = this.ruleToLookup(rule * 256);
+    const lookup = Object.fromEntries(this.ruleToLookup(rule * 256));
     for (let i = 0; i < Math.floor(h / bitSize) + 1; i++) {
       row = this.nextRow(row, lookup);
       this.drawRow(ctx, row, bitSize, i * bitSize);
