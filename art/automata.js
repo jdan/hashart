@@ -1,11 +1,12 @@
 const { Art } = require("./_base.js");
-const { _ } = require("./util.js");
+const { _, project } = require("./util.js");
 
 class Automata extends Art {
   constructor() {
     super({
-      rule: 1,
+      rule: 2,
       seed: 4,
+      size: 2,
     });
     this.filename = "automata.js";
     this.created = "26 Feb 2022";
@@ -64,12 +65,12 @@ class Automata extends Art {
       .map((d) => parseInt(d));
   }
 
-  draw(ctx, { ruleBuffer, seedBuffer }) {
+  draw(ctx, { size, rule, seedBuffer }) {
     const w = ctx.canvas.width;
     const h = ctx.canvas.height;
 
     // 12px bits at 1200px looks decent
-    const bitSize = _(12, w);
+    const bitSize = _(project(size, 0, 1, 3, 12), w);
 
     // Initialize an array large enough to handle all possible growth
     let row = Array.from({
@@ -83,7 +84,7 @@ class Automata extends Art {
       row[idx] = input[i];
     }
 
-    const lookup = this.ruleToLookup(ruleBuffer[0]);
+    const lookup = this.ruleToLookup(rule * 256);
     for (let i = 0; i < Math.floor(h / bitSize) + 1; i++) {
       row = this.nextRow(row, lookup);
       this.drawRow(ctx, row, bitSize, i * bitSize);
