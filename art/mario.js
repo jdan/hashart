@@ -2,7 +2,7 @@ const { Art } = require("./_base.js");
 const { _ } = require("./util.js");
 
 class Mario extends Art {
-  // requires SRC_ROOT/vendor/rom.nes
+  // requires SRC_ROOT/vendor/roms/mariobros.nes
   constructor() {
     super({
       inputs: 32,

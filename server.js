@@ -3,7 +3,9 @@ const crypto = require("crypto");
 const { createCanvas } = require("canvas");
 const ejs = require("ejs");
 const fs = require("fs");
+const glob = require("glob");
 const jsnes = require("jsnes");
+const path = require("path");
 const pieces = require("./art/pieces.js");
 const generateState = require("./scripts/generate-state.js");
 
@@ -29,7 +31,7 @@ app.get("/", (req, res) => {
         )
         .join("")}
 
-        <li><a href="/mario/800/600/jdan.png">/mario/800/600/jdan.png</a> (requires $ROOT/vendor/rom.nes)</li>
+        <li><a href="/mario/800/600/jdan.png">/mario/800/600/jdan.png</a> (requires $ROOT/vendor/roms/mariobros.nes)</li>
     </ul>
 
     Provide a piece and have the server pick a random seed
@@ -67,7 +69,9 @@ function sendArt(res, { piece, width, height, seed }) {
   let props = {};
   if (piece === "mario") {
     if (!state) {
-      res.send("State snapshot not found (does $ROOT/vendor/rom.nes exist?)");
+      res.send(
+        "State snapshot not found (does $ROOT/vendor/roms/mariobros.nes exist?)"
+      );
       return;
     }
 
@@ -83,6 +87,29 @@ function sendArt(res, { piece, width, height, seed }) {
 
     props = {
       nes,
+      getFrameBuffer() {
+        return latestFrameBuffer;
+      },
+    };
+  } else if (piece === "nes") {
+    let latestFrameBuffer = null;
+    const nes = new jsnes.NES({
+      onFrame: function (frameBuffer) {
+        latestFrameBuffer = frameBuffer;
+      },
+    });
+
+    const romsGlob = path.join(__dirname, "vendor/roms/**/*.nes");
+    const roms = glob.sync(romsGlob);
+    if (roms.length === 0) {
+      res.send("No roms found (place them in $ROOT/vendor/roms)");
+      return;
+    }
+
+    props = {
+      nes,
+      roms,
+      fs,
       getFrameBuffer() {
         return latestFrameBuffer;
       },

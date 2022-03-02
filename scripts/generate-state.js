@@ -8,7 +8,7 @@ const path = require("path");
 const jsnes = require("jsnes");
 
 const VENDOR_PATH = path.join(__dirname, "../vendor");
-const ROM_PATH = path.join(VENDOR_PATH, "rom.nes");
+const ROM_PATH = path.join(VENDOR_PATH, "roms/mariobros.nes");
 const STATE_PATH = path.join(VENDOR_PATH, "state.json");
 
 // Copied from art.js
@@ -23,7 +23,9 @@ function buttonPress(nes, button, holdFrames = 1) {
 
 module.exports = () => {
   if (!fs.existsSync(ROM_PATH)) {
-    console.log("vendor/rom.nes not found, skipping state generation...");
+    console.log(
+      "vendor/roms/mariobros.nes not found, skipping state generation..."
+    );
     return;
   } else if (fs.existsSync(STATE_PATH)) {
     return fs.readFileSync(STATE_PATH, "utf-8");

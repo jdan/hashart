@@ -28,7 +28,7 @@ docker run --rm -p "3000:3000" docker.pkg.github.com/jdan/hashart/hashart-srv:la
 To be able to use the "mario" piece:
 
 ```
-docker run --rm -p "3000:3000" -v "/path/to/mariobros.nes:/app/vendor/rom.nes" docker.pkg.github.com/jdan/hashart/hashart-srv:latest
+docker run --rm -p "3000:3000" -v "/path/to/mariobros.nes:/app/vendor/roms/mariobros.nes" docker.pkg.github.com/jdan/hashart/hashart-srv:latest
 ```
 
 ### rendering hashart on screens
