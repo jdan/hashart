@@ -106,13 +106,17 @@ function sendArt(res, { piece, width, height, seed }) {
       return;
     }
 
+    const secondCanvas = createCanvas(parseInt(width), parseInt(height));
+
     props = {
       nes,
       roms,
       fs,
+      path,
       getFrameBuffer() {
         return latestFrameBuffer;
       },
+      secondCtx: secondCanvas.getContext("2d"),
     };
   }
 
