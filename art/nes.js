@@ -61,16 +61,33 @@ class Nes extends Art {
   }
 
   draw(ctx, { rom }, { nes, getFrameBuffer, roms, fs, path, secondCtx }) {
-    const romPath = roms[Math.floor(rom * roms.length)];
-    const romData = fs.readFileSync(romPath, {
+    let romPath = roms[Math.floor(rom * roms.length)];
+    let romData = fs.readFileSync(romPath, {
       encoding: "binary",
     });
 
-    nes.loadROM(romData);
+    let loaded = false;
+
+    while (!loaded) {
+      try {
+        nes.loadROM(romData);
+        loaded = true;
+      } catch (e) {
+        // random :(
+        romPath = roms[Math.floor(Math.random() * roms.length)];
+        romData = fs.readFileSync(romPath, {
+          encoding: "binary",
+        });
+      }
+    }
 
     // Wait 200 frames
     for (let i = 0; i < 500; i++) {
-      nes.frame();
+      try {
+        nes.frame();
+      } catch (e) {
+        continue;
+      }
     }
 
     this.drawBuffer(ctx, secondCtx, getFrameBuffer());
