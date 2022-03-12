@@ -1,7 +1,7 @@
 const { Art } = require("./_base.js");
 const { _, project } = require("./util.js");
 
-class Spinner extends Art {
+class Epicycles extends Art {
   constructor() {
     super({
       l1: 4,
@@ -9,7 +9,7 @@ class Spinner extends Art {
       l2: 4,
       v2: 4,
     });
-    this.filename = "spinner.js";
+    this.filename = "epicycles.js";
     this.created = "12 Mar 2022";
   }
 
@@ -61,4 +61,4 @@ class Spinner extends Art {
   }
 }
 
-exports.Spinner = Spinner;
+exports.Epicycles = Epicycles;
