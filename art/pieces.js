@@ -20,6 +20,7 @@ const { Knots } = require("./knots.js");
 const { Fifteen } = require("./fifteen.js");
 const { Automata } = require("./automata.js");
 const { Nes } = require("./nes.js");
+const { Spinner } = require("./spinner.js");
 
 module.exports = {
   circles: Circle,
@@ -44,4 +45,5 @@ module.exports = {
   fifteen: Fifteen,
   automata: Automata,
   nes: Nes,
+  spinner: Spinner,
 };
