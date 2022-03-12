@@ -9,7 +9,7 @@ class Spinner extends Art {
       l2: 4,
       v2: 4,
     });
-    this.filename = "pendulum.js";
+    this.filename = "spinner.js";
     this.created = "12 Mar 2022";
   }
 
