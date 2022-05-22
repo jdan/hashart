@@ -21,6 +21,7 @@ const { Fifteen } = require("./fifteen.js");
 const { Automata } = require("./automata.js");
 const { Nes } = require("./nes.js");
 const { Epicycles } = require("./epicycles.js");
+const { Network } = require("./network.js");
 
 module.exports = {
   circles: Circle,
@@ -46,4 +47,5 @@ module.exports = {
   automata: Automata,
   nes: Nes,
   epicycles: Epicycles,
+  network: Network,
 };
