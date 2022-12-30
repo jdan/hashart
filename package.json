@@ -8,7 +8,8 @@
     "start": "next start"
   },
   "dependencies": {
-    "chess.js": "^0.11.0"
+    "chess.js": "^0.11.0",
+    "voronoi": "^1.0.0"
   },
   "devDependencies": {
     "canvas": "^2.7.0",
