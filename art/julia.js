@@ -7,6 +7,8 @@ class Julia extends Art {
       real: 16,
       imaginary: 16,
     });
+    // not very interesting
+    this.hidden = true;
     this.filename = "julia.js";
     this.created = "10 Oct 2023";
   }
@@ -68,6 +70,50 @@ class Julia extends Art {
 
         ctx.fillStyle = `rgb(${shade}, ${shade}, ${shade})`;
         ctx.fillRect(x, y, s, s);
+      }
+    }
+
+    const s2 = _(32, w);
+    for (let x = 0; x < w; x += s2) {
+      for (let y = 0; y < h; y += s2) {
+        const re = project(x, 0, w, -1 * aspectRatio, 1 * aspectRatio);
+        const im = project(y, 0, h, -1, 1);
+
+        // Get the next coordinate
+        const zr2 = re * re - im * im;
+        const zi2 = 2 * re * im;
+        const re2 = zr2 + cr;
+        const im2 = zi2 + ci;
+
+        const dy = im2 - im;
+        const dx = re2 - re;
+        const r = project(Math.sqrt(dx * dx + dy * dy), 0, 2, 0, s2 / 2);
+        const theta = Math.atan2(dy, dx);
+
+        // draw a line of length s, centered as (x + s/2, y + s/2), with angle theta
+        ctx.strokeStyle = "rgb(0, 0, 0)";
+        ctx.beginPath();
+        ctx.moveTo(x + s2 / 2, y + s2 / 2);
+        ctx.lineTo(
+          x + s2 / 2 + r * Math.cos(theta),
+          y + s2 / 2 + r * Math.sin(theta)
+        );
+        ctx.stroke();
+
+        // let shade = project(zr * zr + zi * zi, 0, 4, 0, 255);
+        // if (Number.isNaN(shade)) {
+        //   shade = 255;
+        // }
+
+        // if (shade < 0) {
+        //   shade = 0;
+        // }
+        // if (shade > 255) {
+        //   shade = 255;
+        // }
+
+        // ctx.fillStyle = `rgb(${shade}, ${shade}, ${shade})`;
+        // ctx.fillRect(x, y, s, s);
       }
     }
   }
