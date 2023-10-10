@@ -23,6 +23,7 @@ const { Nes } = require("./nes.js");
 const { Epicycles } = require("./epicycles.js");
 const { Network } = require("./network.js");
 const { Voronoi } = require("./voronoi.js");
+const { Julia } = require("./julia.js");
 
 module.exports = {
   circles: Circle,
@@ -50,4 +51,5 @@ module.exports = {
   epicycles: Epicycles,
   network: Network,
   voronoi: Voronoi,
+  julia: Julia,
 };
