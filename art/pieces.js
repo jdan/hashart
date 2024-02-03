@@ -24,6 +24,7 @@ const { Epicycles } = require("./epicycles.js");
 const { Network } = require("./network.js");
 const { Voronoi } = require("./voronoi.js");
 const { Julia } = require("./julia.js");
+const { ThreeBody } = require("./three-body.js");
 
 module.exports = {
   circles: Circle,
@@ -52,4 +53,5 @@ module.exports = {
   network: Network,
   voronoi: Voronoi,
   julia: Julia,
+  threebody: ThreeBody,
 };
