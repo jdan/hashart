@@ -28,13 +28,22 @@ export default function Index() {
 
       <p>
         Art generated from{" "}
-        <Link href="https://en.wikipedia.org/wiki/SHA-2">SHA-256</Link> hashes.
-        by <Link href="https://jordanscales.com">jdan</Link>.
+        <Link href="https://en.wikipedia.org/wiki/SHA-2">
+          <a>SHA-256</a>
+        </Link>{" "}
+        hashes. by{" "}
+        <Link href="https://jordanscales.com">
+          <a>jdan</a>
+        </Link>
+        .
       </p>
 
       <p>
         Source available{" "}
-        <Link href="https://github.com/jdan/hashart">on GitHub</Link>.
+        <Link href="https://github.com/jdan/hashart">
+          <a>on GitHub</a>
+        </Link>
+        .
       </p>
       <p>Browse the collection:</p>
       <ul>
@@ -49,7 +58,9 @@ export default function Index() {
                   {" - "}
                 </>
               ) : null}
-              <Link href={`/${name}/Hello,%20world!`}>{name}</Link>
+              <Link href={`/${name}/Hello,%20world!`}>
+                <a>{name}</a>
+              </Link>
             </li>
           ))}
       </ul>
@@ -57,7 +68,7 @@ export default function Index() {
       <p>
         This art was created for{" "}
         <Link href="https://github.com/jdan/hashart#rendering-hashart-on-screens">
-          small e-ink displays
+          <a>small e-ink displays</a>
         </Link>
         , such as my setup below.
       </p>

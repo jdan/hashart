@@ -69,14 +69,16 @@ function Art({ piece, seed, hashString }) {
       <div className={styles.header}>
         <h1>{piece}</h1>
         <div>
-          <Link href="/">home</Link>
+          <Link href="/">
+            <a>home</a>
+          </Link>
           {art.filename ? (
             <>
               {" . "}
               <Link
                 href={`https://github.com/jdan/hashart/blob/main/art/${art.filename}`}
               >
-                github
+                <a>github</a>
               </Link>
             </>
           ) : null}
