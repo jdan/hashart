@@ -58,7 +58,7 @@ function Art({ piece, seed, hashString }) {
         <meta property="og:description" content={`seed: ${seed}`} />
         <meta
           property="og:image"
-          content={`https://hashpng.jordanscales.com/${piece}/1200/630/${encodeURIComponent(
+          content={`https://hashart.jordanscales.com/${piece}/1200/630/${encodeURIComponent(
             seed
           )}.png`}
         />

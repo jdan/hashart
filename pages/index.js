@@ -16,7 +16,7 @@ export default function Index() {
         />
         <meta
           property="og:image"
-          content="https://hashpng.jordanscales.com/walk/1200/630/fulls.png"
+          content="https://hashart.jordanscales.com/walk/1200/630/fulls.png"
         />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:creator" content="@jdan" />
