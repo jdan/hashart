@@ -1,4 +1,4 @@
-FROM node:18-bookworm
+FROM node:24-bookworm
 
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update -y

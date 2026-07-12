@@ -3,5 +3,5 @@
   publish = ".next"
 
 [build.environment]
-  NODE_VERSION = "18"
+  NODE_VERSION = "24"
   NODE_OPTIONS = "--openssl-legacy-provider"
