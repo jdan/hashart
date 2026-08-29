@@ -22,7 +22,7 @@ node server.js
 This service is also contained in a Docker image that I automatically publish to [GitHub packages](https://github.com/jdan/hashart/packages/728823):
 
 ```
-docker run --rm -p "3000:3000" docker.pkg.github.com/jdan/hashart/hashart-srv:latest
+docker run --rm -p "3000:3000" ghcr.io/jdan/hashart/hashart-srv:latest
 ```
 
 To be able to use the "mario" piece:
